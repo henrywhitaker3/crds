@@ -6,7 +6,7 @@
     {
       "customType": "regex",
       "description": ["Process custom dependencies"],
-      "managerFilePatterns": ["/ansible/.*/.*\\.yaml$/", "/.*.yaml$/"],
+      "managerFilePatterns": ["crds.yaml"],
       "matchStrings": [
         "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+?: \"?(?<currentValue>\\S+?)\"?$)"
       ],
