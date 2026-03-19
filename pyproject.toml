@@ -1,0 +1,7 @@
+[project]
+name = "crds"
+version = "0.1.0"
+description = "Pull Kubernetes CRDs from a url and generate json schemas for them"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []

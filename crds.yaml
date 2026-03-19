@@ -1,0 +1,5 @@
+crds:
+  - group: dragonflydb.io
+    name: dragonflies
+    ref: v1.5.0
+    template: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/refs/tags/{{ version }}/config/crd/bases/dragonflydb.io_dragonflies.yaml
