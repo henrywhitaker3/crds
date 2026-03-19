@@ -12,21 +12,21 @@ from jinja2 import Template
 @dataclass
 class CRD:
     group: str
-    name: str
+    names: List[str]
     ref: str
     template: str
 
     def makeGroupDir(self: CRD):
         Path(f"schemas/{self.group}").mkdir(parents=True, exist_ok=True)
 
-    def fetch(self: CRD) -> str:
-        url = Template(self.template).render(version=self.ref)
+    def fetch(self: CRD, name: str) -> str:
+        url = Template(self.template).render(version=self.ref, name=name)
         response = requests.get(url)
         response.raise_for_status()
         return response.text
 
-    def write(self: CRD, schema: dict, version: str):
-        with open(f"schemas/{self.group}/{self.name}_{version}.json", "w") as f:
+    def write(self: CRD, name: str, schema: dict, version: str):
+        with open(f"schemas/{self.group}/{name}_{version}.json", "w") as f:
             json.dump(schema, f, indent=2)
 
     def collectVersions(self: CRD, parsed: Any) -> dict[str, dict]:
@@ -35,15 +35,16 @@ class CRD:
             for version in parsed["spec"]["versions"]
         }
 
-    def store(self: CRD, parsed: Any):
+    def store(self: CRD, name: str, parsed: Any):
         versions = self.collectVersions(parsed)
         for version, data in versions.items():
-            self.write(data, version)
+            self.write(name, data, version)
 
     def process(self: CRD):
         self.makeGroupDir()
-        crd = yaml.safe_load(self.fetch())
-        self.store(crd)
+        for kind in self.names:
+            crd = yaml.safe_load(self.fetch(kind))
+            self.store(kind, crd)
 
 
 @dataclass
