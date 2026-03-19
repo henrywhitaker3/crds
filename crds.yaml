@@ -33,7 +33,8 @@ crds:
       - pgupgrades
       - postgresclusters
 
-  - group: experimental.gateway.networking.k8s.io
+  - group: gateway.networking.k8s.io
+    subgroup: experimental
     # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
     ref: v1.5.1
     template: https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/refs/tags/{{ version }}/config/crd/experimental/gateway.networking.k8s.io_{{ name }}.yaml
@@ -49,7 +50,8 @@ crds:
       - tlsroutes
       - udproutes
 
-  - group: standard.gateway.networking.k8s.io
+  - group: gateway.networking.k8s.io
+    subgroup: standard
     # renovate: datasource=github-tags depName=kubernetes-sigs/gateway-api
     ref: v1.5.1
     template: https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/refs/tags/{{ version }}/config/crd/standard/gateway.networking.k8s.io_{{ name }}.yaml

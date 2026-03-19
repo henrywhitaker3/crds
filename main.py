@@ -3,7 +3,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, List
+from typing import Any, List, Optional
 
 import requests
 import yaml
@@ -16,9 +16,14 @@ class CRD:
     names: List[str]
     ref: str
     template: str
+    subgroup: Optional[str] = None
 
     def makeGroupDir(self: CRD):
         Path(f"schemas/{self.group}").mkdir(parents=True, exist_ok=True)
+        if self.subgroup:
+            Path(f"schemas/{self.group}/{self.subgroup}").mkdir(
+                parents=True, exist_ok=True
+            )
 
     def fetch(self: CRD, name: str) -> str:
         url = Template(self.template).render(version=self.ref, name=name)
@@ -27,7 +32,10 @@ class CRD:
         return response.text
 
     def write(self: CRD, name: str, schema: dict, version: str):
-        with open(f"schemas/{self.group}/{name}_{version}.json", "w") as f:
+        prefix = f"schemas/{self.group}"
+        if self.subgroup:
+            prefix = f"{prefix}/{self.subgroup}"
+        with open(f"{prefix}/{name}_{version}.json", "w") as f:
             json.dump(schema, f, indent=2)
 
     def collectVersions(self: CRD, parsed: Any) -> dict[str, dict]:
