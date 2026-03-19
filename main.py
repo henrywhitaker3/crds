@@ -51,7 +51,7 @@ class CRD:
 
     def processKind(self: CRD, kind: str):
         crd = yaml.safe_load(self.fetch(kind))
-        self.store(kind, crd)
+        self.store(crd["spec"]["names"]["singular"], crd)
 
     def process(self: CRD):
         self.makeGroupDir()
