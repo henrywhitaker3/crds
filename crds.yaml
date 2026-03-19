@@ -80,7 +80,7 @@ crds:
   - group: generators.external-secrets.io
     # renovate: datasource=github-tags depName=external-secrets/external-secrets
     ref: v2.1.0
-    template: https://raw.githubusercontent.com/external-secrets/external-secrets/refs/tags/{{ version }}/config/crds/bases/external-secrets.io_{{ name }}.yaml
+    template: https://raw.githubusercontent.com/external-secrets/external-secrets/refs/tags/{{ version }}/config/crds/bases/generators.external-secrets.io_{{ name }}.yaml
     names:
       - acraccesstokens
       - cloudsmithaccesstokens
