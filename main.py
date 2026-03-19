@@ -1,5 +1,6 @@
 import argparse
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, List
@@ -40,11 +41,16 @@ class CRD:
         for version, data in versions.items():
             self.write(name, data, version)
 
+    def processKind(self: CRD, kind: str):
+        crd = yaml.safe_load(self.fetch(kind))
+        self.store(kind, crd)
+
     def process(self: CRD):
         self.makeGroupDir()
-        for kind in self.names:
-            crd = yaml.safe_load(self.fetch(kind))
-            self.store(kind, crd)
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(self.processKind, kind) for kind in self.names]
+            for future in as_completed(futures):
+                future.result()
 
 
 @dataclass
@@ -52,8 +58,10 @@ class Config:
     crds: List[CRD]
 
     def processCRDs(self: Config):
-        for crd in self.crds:
-            crd.process()
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(crd.process) for crd in self.crds]
+            for future in as_completed(futures):
+                future.result()
 
 
 def load(config: str) -> Config:

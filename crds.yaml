@@ -5,3 +5,21 @@ crds:
     template: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/refs/tags/{{ version }}/config/crd/bases/dragonflydb.io_{{ name }}.yaml
     names:
       - dragonflies
+
+  - group: k8s.mariadb.com
+    # renoavate: datasource=github-tags depName=mariadb-operator/mariadb-operator
+    ref: v26.3.0
+    template: https://raw.githubusercontent.com/mariadb-operator/mariadb-operator/refs/tags/{{ version }}/config/crd/bases/k8s.mariadb.com_{{ name }}.yaml
+    names:
+      - backups
+      - connections
+      - databases
+      - externalmariadbs
+      - grants
+      - mariadbs
+      - maxscales
+      - physicalbackups
+      - pointintimerecoveries
+      - restores
+      - sqljobs
+      - users
