@@ -64,3 +64,38 @@ crds:
       - listenersets
       - referencegrants
       - tlsroutes
+
+  - group: external-secrets.io
+    # renovate: datasource=github-tags depName=external-secrets/external-secrets
+    ref: v2.1.0
+    template: https://raw.githubusercontent.com/external-secrets/external-secrets/refs/tags/{{ version }}/config/crds/bases/external-secrets.io_{{ name }}.yaml
+    names:
+      - clusterexternalsecrets
+      - clusterpushsecrets
+      - clustersecretstores
+      - externalsecrets
+      - pushsecrets
+      - secretstores
+
+  - group: generators.external-secrets.io
+    # renovate: datasource=github-tags depName=external-secrets/external-secrets
+    ref: v2.1.0
+    template: https://raw.githubusercontent.com/external-secrets/external-secrets/refs/tags/{{ version }}/config/crds/bases/external-secrets.io_{{ name }}.yaml
+    names:
+      - acraccesstokens
+      - cloudsmithaccesstokens
+      - clustergenerators
+      - ecrauthorizationtokens
+      - fakes
+      - gcraccesstokens
+      - generatorstates
+      - githubaccesstokens
+      - grafanas
+      - mfas
+      - passwords
+      - quayaccesstokens
+      - sshkeys
+      - stssessiontokens
+      - uuids
+      - vaultdynamicsecrets
+      - webhooks
