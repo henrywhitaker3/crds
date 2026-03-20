@@ -20,7 +20,7 @@ jobs:
         run: |
           uv python install
           uv sync --locked --all-extras --dev
-          uv run main.py
+          uv run src/main.py
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "fix(schemas): generate schemas"
