@@ -11,6 +11,34 @@ from jinja2 import Template
 
 
 @dataclass
+class CRDCollection:
+    group: str
+    ref: str
+    template: str
+
+    def fetch(self: CRDCollection) -> str:
+        url = Template(self.template).render(version=self.ref)
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
+
+    def split(self: CRDCollection, raw: str) -> List[str]:
+        return raw.split("---")
+
+    def process(self: CRDCollection):
+        crds = self.split(self.fetch())
+        for crd in crds:
+            parsed = yaml.safe_load(crd)
+            if parsed["spec"]["group"] == self.group:
+                obj = CRD(
+                    group=self.group, names=[], ref=self.ref, template=self.template
+                )
+                obj.makeGroupDir()
+                obj.store(parsed["spec"]["names"]["singular"], parsed)
+        pass
+
+
+@dataclass
 class CRD:
     group: str
     names: List[str]
@@ -64,10 +92,17 @@ class CRD:
 @dataclass
 class Config:
     crds: List[CRD]
+    collections: List[CRDCollection]
 
     def processCRDs(self: Config):
         with ThreadPoolExecutor() as executor:
             futures = [executor.submit(crd.process) for crd in self.crds]
+            for future in as_completed(futures):
+                future.result()
+
+    def processCollections(self: Config):
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(crd.process) for crd in self.collections]
             for future in as_completed(futures):
                 future.result()
 
@@ -76,7 +111,8 @@ def load(config: str) -> Config:
     with open(config) as f:
         data = yaml.safe_load(f)
         crds = [CRD(**crd) for crd in data["crds"]]
-        return Config(crds=crds)
+        collections = [CRDCollection(**crd) for crd in data["collections"]]
+        return Config(crds=crds, collections=collections)
 
 
 def parse(crd: str) -> CRD:
@@ -91,6 +127,7 @@ def main():
 
     config = load(args.config)
     config.processCRDs()
+    config.processCollections()
 
 
 if __name__ == "__main__":
