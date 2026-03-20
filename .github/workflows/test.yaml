@@ -1,11 +1,16 @@
-name: Validate
+name: Test
 
 on:
   pull_request:
     branches: [main]
+    paths:
+      - .python-version
+      - pyproject.yaml
+      - uv.lock
+      - src/*
 
 jobs:
-  validate:
+  test:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -17,4 +22,4 @@ jobs:
         run: |
           uv python install
           uv sync --locked --all-extras --dev
-          uv run src/main.py
+          uv run pytest -v
