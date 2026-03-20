@@ -117,3 +117,17 @@ crds:
     names:
       - challenges
       - orders
+
+  - group: gateway.envoyproxy.io
+    # renovate: datasource=github-tags depName=envoyproxy/gateway
+    ref: v1.7.1
+    template: https://raw.githubusercontent.com/envoyproxy/gateway/refs/tags/{{ version }}/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_{{ name }}.yaml
+    names:
+      - backends
+      - backendtrafficpolicies
+      - clienttrafficpolicies
+      - envoyextensionpolicies
+      - envoypatchpolicies
+      - envoyproxies
+      - httproutefilters
+      - securitypolicies
