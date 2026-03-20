@@ -1,4 +1,4 @@
-name: Publish
+name: Validate
 
 on:
   pull_request:
