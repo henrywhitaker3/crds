@@ -132,6 +132,15 @@ crds:
       - httproutefilters
       - securitypolicies
 
+  - group: argoproj.io
+    # renovate: datasource=github-tags depName=argoproj/argo-cd
+    ref: v3.3.4
+    template: https://raw.githubusercontent.com/argoproj/argo-cd/refs/tags/{{ version }}/manifests/crds/{{ name }}-crd.yaml
+    names:
+      - application
+      - applicationset
+      - appproject
+
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio
