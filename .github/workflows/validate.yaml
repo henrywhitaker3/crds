@@ -1,19 +1,14 @@
 name: Publish
 
 on:
-  push:
+  pull_request:
     branches: [main]
-    paths:
-      - crds.yaml
-  schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
 
 jobs:
-  generate:
+  validate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v6
       - name: Install uv
@@ -23,7 +18,3 @@ jobs:
           uv python install
           uv sync --locked --all-extras --dev
           uv run main.py
-      - uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: "fix(schemas): generate schemas"
-          file_pattern: "schemas/"
