@@ -1,0 +1,25 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .python-version
+      - pyproject.yaml
+      - uv.lock
+      - src/*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Generate schemas
+        run: |
+          uv python install
+          uv sync --locked --all-extras --dev
+          uv run pytest -v
