@@ -141,6 +141,38 @@ crds:
       - applicationset
       - appproject
 
+  - group: kyverno
+    subgroup: kyverno.io
+    # renovate: datasource=github-tags depName=kyverno/kyverno
+    ref: v1.17.1
+    template: https://raw.githubusercontent.com/kyverno/kyverno/refs/tags/{{ version }}/config/crds/kyverno/kyverno.io_{{ name }}.yaml
+    names:
+      - cleanuppolicies
+      - clustercleanuppolicies
+      - clusterpolicies
+      - policies
+      - globalcontextentries
+      - policyexceptions
+      - updaterequests
+
+  - group: kyverno
+    subgroup: policies.kyverno.io
+    # renovate: datasource=github-tags depName=kyverno/kyverno
+    ref: v1.17.1
+    template: https://raw.githubusercontent.com/kyverno/kyverno/refs/tags/{{ version }}/config/crds/policies.kyverno.io/policies.kyverno.io_{{ name }}.yaml
+    names:
+      - deletingpolicies
+      - generatingpolicies
+      - imagevalidatingpolicies
+      - mutatingpolicies
+      - namespaceddeletingpolicies
+      - namespacedgeneratingpolicies
+      - namespacedimagevalidatingpolicies
+      - namespacedmutatingpolicies
+      - namespacedvalidatingpolicies
+      - policyexceptions
+      - validatingpolicies
+
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio
