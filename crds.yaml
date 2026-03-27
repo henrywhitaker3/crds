@@ -173,6 +173,13 @@ crds:
       - policyexceptions
       - validatingpolicies
 
+  - group: renovate-operator.mogenius.com
+    # renovate: datasource=github-tags depName=mogenius/renovate-operator
+    ref: v1.17.1
+    template: https://raw.githubusercontent.com/mogenius/renovate-operator/refs/tags/{{ version }}/charts/renovate-operator/crd/renovate-operator.mogenius.com_{{ name }}.yaml
+    names:
+      - renovatejobs
+
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio
