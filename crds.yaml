@@ -134,7 +134,7 @@ crds:
 
   - group: argoproj.io
     # renovate: datasource=github-tags depName=argoproj/argo-cd
-    ref: v3.3.5
+    ref: v3.3.6
     template: https://raw.githubusercontent.com/argoproj/argo-cd/refs/tags/{{ version }}/manifests/crds/{{ name }}-crd.yaml
     names:
       - application
