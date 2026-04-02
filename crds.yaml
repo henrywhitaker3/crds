@@ -175,7 +175,7 @@ crds:
 
   - group: renovate-operator.mogenius.com
     # renovate: datasource=github-tags depName=mogenius/renovate-operator
-    ref: 3.10.1
+    ref: 4.0.0
     template: https://raw.githubusercontent.com/mogenius/renovate-operator/refs/tags/{{ version }}/charts/renovate-operator/crd/renovate-operator.mogenius.com_{{ name }}.yaml
     names:
       - renovatejobs
