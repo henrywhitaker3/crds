@@ -102,7 +102,7 @@ crds:
 
   - group: cert-manager.io
     # renovate: datasource=github-tags depName=cert-manager/cert-manager
-    ref: v1.20.1
+    ref: v1.20.2
     template: https://raw.githubusercontent.com/cert-manager/cert-manager/refs/tags/{{ version }}/deploy/crds/cert-manager.io_{{ name }}.yaml
     names:
       - certificaterequests
@@ -112,7 +112,7 @@ crds:
 
   - group: acme.cert-manager.io
     # renovate: datasource=github-tags depName=cert-manager/cert-manager
-    ref: v1.20.1
+    ref: v1.20.2
     template: https://raw.githubusercontent.com/cert-manager/cert-manager/refs/tags/{{ version }}/deploy/crds/acme.cert-manager.io_{{ name }}.yaml
     names:
       - challenges
