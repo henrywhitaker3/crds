@@ -183,20 +183,20 @@ crds:
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio
-    ref: 1.29.1
+    ref: 1.29.2
     template: https://raw.githubusercontent.com/istio/istio/refs/tags/{{ version }}/manifests/charts/base/files/crd-all.gen.yaml
 
   - group: security.istio.io
     # renovate: datasource=github-tags depName=istio/istio
-    ref: 1.29.1
+    ref: 1.29.2
     template: https://raw.githubusercontent.com/istio/istio/refs/tags/{{ version }}/manifests/charts/base/files/crd-all.gen.yaml
 
   - group: telemetry.istio.io
     # renovate: datasource=github-tags depName=istio/istio
-    ref: 1.29.1
+    ref: 1.29.2
     template: https://raw.githubusercontent.com/istio/istio/refs/tags/{{ version }}/manifests/charts/base/files/crd-all.gen.yaml
 
   - group: extensions.istio.io
     # renovate: datasource=github-tags depName=istio/istio
-    ref: 1.29.1
+    ref: 1.29.2
     template: https://raw.githubusercontent.com/istio/istio/refs/tags/{{ version }}/manifests/charts/base/files/crd-all.gen.yaml
