@@ -58,8 +58,7 @@ class CRDCollection:
     def process(self):
         raw = fetch_url(self.template, version=self.ref)
         directory = schema_dir(self.group)
-        for doc in raw.split("---"):
-            parsed = yaml.safe_load(doc)
+        for parsed in yaml.safe_load_all(raw):
             if parsed and parsed["spec"]["group"] == self.group:
                 store_crd(directory, parsed["spec"]["names"]["singular"], parsed)
 

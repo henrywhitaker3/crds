@@ -200,3 +200,8 @@ collections:
     # renovate: datasource=github-tags depName=istio/istio
     ref: 1.29.2
     template: https://raw.githubusercontent.com/istio/istio/refs/tags/{{ version }}/manifests/charts/base/files/crd-all.gen.yaml
+
+  - group: operator.victoriametrics.com
+    # renovate: datasource=github-tags depName=VictoriaMetrics/operator
+    ref: v0.68.4
+    template: https://raw.githubusercontent.com/VictoriaMetrics/operator/refs/tags/{{ version }}/config/crd/overlay/crd.yaml
