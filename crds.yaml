@@ -120,7 +120,7 @@ crds:
 
   - group: gateway.envoyproxy.io
     # renovate: datasource=github-tags depName=envoyproxy/gateway
-    ref: v1.7.1
+    ref: v1.7.2
     template: https://raw.githubusercontent.com/envoyproxy/gateway/refs/tags/{{ version }}/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_{{ name }}.yaml
     names:
       - backends
