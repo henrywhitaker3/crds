@@ -180,6 +180,22 @@ crds:
     names:
       - renovatejobs
 
+  - group: monitoring.coreos.com
+    # renovate: datasource=github-tags depName=prometheus-operator/prometheus-operator
+    ref: v0.90.1
+    template: https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/refs/tags/{{ version }}/example/prometheus-operator-crd-full/monitoring.coreos.com_{{ name }}.yaml
+    names:
+      - alertmanagerconfigs
+      - alertmanagers
+      - podmonitors
+      - probes
+      - prometheusagents
+      - prometheuses
+      - prometheusrules
+      - scrapeconfigs
+      - servicemonitors
+      - thanosrulers
+
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio

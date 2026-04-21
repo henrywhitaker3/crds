@@ -9,6 +9,11 @@ import requests
 import yaml
 from jinja2 import Template
 
+yaml.SafeLoader.add_constructor(
+    "tag:yaml.org,2002:value",
+    lambda loader, node: loader.construct_scalar(node),
+)
+
 
 def fetch_url(template: str, **kwargs) -> str:
     url = Template(template).render(**kwargs)
