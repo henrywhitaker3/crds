@@ -196,6 +196,22 @@ crds:
       - servicemonitors
       - thanosrulers
 
+  - group: netbird.io
+    # renovate: datasource=github-tags depName=netbirdio/kubernetes-operator
+    ref: v0.3.1
+    template: https://raw.githubusercontent.com/netbirdio/kubernetes-operator/refs/tags/{{ version }}/helm/kubernetes-operator/crds/netbird.io_{{ name }}.yaml
+    names:
+      - groups
+      - nbgroups
+      - nbpolicies
+      - nbresources
+      - nbroutingpeers
+      - nbsetupkeys
+      - networkresources
+      - networkrouters
+      - setupkeys
+      - sidecarprofiles
+
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio
