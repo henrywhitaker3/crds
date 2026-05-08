@@ -212,6 +212,17 @@ crds:
       - setupkeys
       - sidecarprofiles
 
+  - group: opentelemetry.io
+    # renovate: datasource=github-tags depName=open-telemetry/opentelemetry-operator
+    ref: v0.150.0
+    template: https://raw.githubusercontent.com/open-telemetry/opentelemetry-operator/refs/tags/{{ version }}/config/crd/bases/opentelemetry.io_{{ name }}.yaml
+    names:
+      - clusterobservabilities
+      - instrumentations
+      - opampbridges
+      - opentelemetrycollectors
+      - targetallocators
+
 collections:
   - group: networking.istio.io
     # renovate: datasource=github-tags depName=istio/istio
