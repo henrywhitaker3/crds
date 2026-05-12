@@ -140,6 +140,8 @@
               "type": "array"
             },
             "configPath": {
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._/-]*$",
               "type": "string"
             },
             "env": {
@@ -2177,6 +2179,8 @@
               "type": "array"
             },
             "configFile": {
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9._/-]*$",
               "type": "string"
             },
             "env": {

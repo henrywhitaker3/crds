@@ -5641,6 +5641,12 @@
                   },
                   "type": "array"
                 },
+                "secretNamespaces": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
                 "serviceMonitorNamespaceSelector": {
                   "default": {},
                   "properties": {
