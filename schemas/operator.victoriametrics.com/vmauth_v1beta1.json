@@ -20,6 +20,15 @@
           "type": "object",
           "x-kubernetes-preserve-unknown-fields": true
         },
+        "arbitraryFSAccessThroughSMs": {
+          "description": "ArbitraryFSAccessThroughSMs configures whether configuration\ncan contain paths to arbitrary files on the file system\ne.g bearer token files, basic auth password files, tls certs file paths",
+          "properties": {
+            "deny": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
         "componentVersion": {
           "description": "ComponentVersion defines default images tag for all components.\nit can be overwritten with component specific image.tag value.",
           "type": "string"
@@ -157,7 +166,7 @@
                 "description": "CRD describes exist operator's CRD object,\noperator generates access url based on CRD params.",
                 "properties": {
                   "kind": {
-                    "description": "Kind one of:\nVMAgent,VMAlert, VMSingle, VMCluster/vmselect, VMCluster/vmstorage,VMCluster/vminsert,VMAlertManager, VLSingle, VLCluster/vlinsert, VLCluster/vlselect, VLCluster/vlstorage, VTSingle, VTCluster/vtinsert, VTCluster/vtselect, VTCluster/vtstorage and VLAgent",
+                    "description": "Kind one of:\nVMAgent,VMAlert, VMSingle, VMCluster/vmselect, VMCluster/vmstorage,VMCluster/vminsert,VMAlertManager, VLSingle, VLCluster/vlinsert, VLCluster/vlselect, VLCluster/vlstorage, VTSingle, VTCluster/vtinsert, VTCluster/vtselect, VTCluster/vtstorage VMAnomaly and VLAgent",
                     "enum": [
                       "VMAgent",
                       "VMAlert",
@@ -176,7 +185,8 @@
                       "VTCluster/vtinsert",
                       "VTCluster/vtselect",
                       "VTCluster/vtstorage",
-                      "VTSingle"
+                      "VTSingle",
+                      "VMAnomaly"
                     ],
                     "type": "string"
                   },
@@ -2097,7 +2107,7 @@
                     "description": "CRD describes exist operator's CRD object,\noperator generates access url based on CRD params.",
                     "properties": {
                       "kind": {
-                        "description": "Kind one of:\nVMAgent,VMAlert, VMSingle, VMCluster/vmselect, VMCluster/vmstorage,VMCluster/vminsert,VMAlertManager, VLSingle, VLCluster/vlinsert, VLCluster/vlselect, VLCluster/vlstorage, VTSingle, VTCluster/vtinsert, VTCluster/vtselect, VTCluster/vtstorage and VLAgent",
+                        "description": "Kind one of:\nVMAgent,VMAlert, VMSingle, VMCluster/vmselect, VMCluster/vmstorage,VMCluster/vminsert,VMAlertManager, VLSingle, VLCluster/vlinsert, VLCluster/vlselect, VLCluster/vlstorage, VTSingle, VTCluster/vtinsert, VTCluster/vtselect, VTCluster/vtstorage VMAnomaly and VLAgent",
                         "enum": [
                           "VMAgent",
                           "VMAlert",
@@ -2116,7 +2126,8 @@
                           "VTCluster/vtinsert",
                           "VTCluster/vtselect",
                           "VTCluster/vtstorage",
-                          "VTSingle"
+                          "VTSingle",
+                          "VMAnomaly"
                         ],
                         "type": "string"
                       },

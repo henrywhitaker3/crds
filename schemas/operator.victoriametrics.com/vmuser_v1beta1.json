@@ -228,7 +228,7 @@
                 "description": "CRD describes exist operator's CRD object,\noperator generates access url based on CRD params.",
                 "properties": {
                   "kind": {
-                    "description": "Kind one of:\nVMAgent,VMAlert, VMSingle, VMCluster/vmselect, VMCluster/vmstorage,VMCluster/vminsert,VMAlertManager, VLSingle, VLCluster/vlinsert, VLCluster/vlselect, VLCluster/vlstorage, VTSingle, VTCluster/vtinsert, VTCluster/vtselect, VTCluster/vtstorage and VLAgent",
+                    "description": "Kind one of:\nVMAgent,VMAlert, VMSingle, VMCluster/vmselect, VMCluster/vmstorage,VMCluster/vminsert,VMAlertManager, VLSingle, VLCluster/vlinsert, VLCluster/vlselect, VLCluster/vlstorage, VTSingle, VTCluster/vtinsert, VTCluster/vtselect, VTCluster/vtstorage VMAnomaly and VLAgent",
                     "enum": [
                       "VMAgent",
                       "VMAlert",
@@ -247,7 +247,8 @@
                       "VTCluster/vtinsert",
                       "VTCluster/vtselect",
                       "VTCluster/vtstorage",
-                      "VTSingle"
+                      "VTSingle",
+                      "VMAnomaly"
                     ],
                     "type": "string"
                   },
