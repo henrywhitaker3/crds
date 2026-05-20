@@ -246,5 +246,5 @@ collections:
 
   - group: operator.victoriametrics.com
     # renovate: datasource=github-tags depName=VictoriaMetrics/operator
-    ref: v0.70.0
+    ref: v0.70.1
     template: https://raw.githubusercontent.com/VictoriaMetrics/operator/refs/tags/{{ version }}/config/crd/overlay/crd.yaml
