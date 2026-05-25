@@ -5029,6 +5029,9 @@
             },
             "prometheusCR": {
               "properties": {
+                "denyFSAccessThroughSMs": {
+                  "type": "boolean"
+                },
                 "enabled": {
                   "type": "boolean"
                 },
