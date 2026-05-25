@@ -214,7 +214,7 @@ crds:
 
   - group: opentelemetry.io
     # renovate: datasource=github-tags depName=open-telemetry/opentelemetry-operator
-    ref: v0.151.0
+    ref: v0.152.0
     template: https://raw.githubusercontent.com/open-telemetry/opentelemetry-operator/refs/tags/{{ version }}/config/crd/bases/opentelemetry.io_{{ name }}.yaml
     names:
       - clusterobservabilities
