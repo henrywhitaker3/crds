@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,6 +14,12 @@ yaml.SafeLoader.add_constructor(
     "tag:yaml.org,2002:value",
     lambda loader, node: loader.construct_scalar(node),
 )
+
+
+def strip_helm_templates(raw: str) -> str:
+    return "\n".join(
+        line for line in raw.splitlines() if not re.search(r"\{\{.*?\}\}", line)
+    )
 
 
 def fetch_url(template: str, **kwargs) -> str:
@@ -61,7 +68,7 @@ class CRDCollection:
     template: str
 
     def process(self):
-        raw = fetch_url(self.template, version=self.ref)
+        raw = strip_helm_templates(fetch_url(self.template, version=self.ref))
         directory = schema_dir(self.group)
         for parsed in yaml.safe_load_all(raw):
             if parsed and parsed["spec"]["group"] == self.group:
@@ -80,7 +87,9 @@ class CRD:
         directory = schema_dir(self.group, self.subgroup)
 
         def process_kind(kind: str):
-            raw = fetch_url(self.template, version=self.ref, name=kind)
+            raw = strip_helm_templates(
+                fetch_url(self.template, version=self.ref, name=kind)
+            )
             crd = yaml.safe_load(raw)
             store_crd(directory, crd["spec"]["names"]["singular"], crd)
 
