@@ -199,7 +199,7 @@ crds:
   - group: netbird.io
     # renovate: datasource=github-tags depName=netbirdio/kubernetes-operator
     ref: v0.5.0
-    template: https://raw.githubusercontent.com/netbirdio/kubernetes-operator/refs/tags/{{ version }}/helm/kubernetes-operator/crds/netbird.io_{{ name }}.yaml
+    template: https://raw.githubusercontent.com/netbirdio/kubernetes-operator/refs/tags/{{ version }}/config/crd/bases/netbird.io_{{ name }}.yaml
     names:
       - groups
       - nbgroups
