@@ -8,7 +8,7 @@ crds:
 
   - group: k8s.mariadb.com
     # renovate: datasource=github-tags depName=mariadb-operator/mariadb-operator
-    ref: v26.3.0
+    ref: v26.6.0
     template: https://raw.githubusercontent.com/mariadb-operator/mariadb-operator/refs/tags/{{ version }}/config/crd/bases/k8s.mariadb.com_{{ name }}.yaml
     names:
       - backups
