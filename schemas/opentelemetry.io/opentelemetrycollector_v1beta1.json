@@ -2012,6 +2012,14 @@
           },
           "type": "object"
         },
+        "command": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
         "config": {
           "properties": {
             "connectors": {
@@ -5046,6 +5054,9 @@
               ],
               "type": "string"
             },
+            "allowInsecureAuthSecrets": {
+              "type": "boolean"
+            },
             "collectorNotReadyGracePeriod": {
               "default": "30s",
               "format": "duration",
@@ -5195,6 +5206,18 @@
             },
             "image": {
               "type": "string"
+            },
+            "mtls": {
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "useCertManager": {
+                  "default": true,
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
             },
             "nodeSelector": {
               "additionalProperties": {
