@@ -850,6 +850,10 @@
           "description": "EnableKubernetesAPISelectors instructs vmagent or vmsingle to use CRD scrape objects spec.selectors for\nKubernetes API list and watch requests.\nhttps://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#list-and-watch-filtering\nIt could be useful to reduce Kubernetes API server resource usage for serving less than 100 CRD scrape objects in total.",
           "type": "boolean"
         },
+        "enableServiceLinks": {
+          "description": "EnableServiceLinks indicates whether information about services should be injected into pod's\nenvironment variables, matching the syntax of Docker links.\nOptional: Defaults to true.",
+          "type": "boolean"
+        },
         "enforcedNamespaceLabel": {
           "description": "EnforcedNamespaceLabel enforces adding a namespace label of origin for each alert\nand metric that is user created. The label value will always be the namespace of the object that is\nbeing created.",
           "type": "string"
@@ -2429,6 +2433,11 @@
         "port": {
           "description": "Port listen address",
           "type": "string"
+        },
+        "preStopSleepSeconds": {
+          "description": "PreStopSleepSeconds defines the number of seconds to sleep in the preStop lifecycle hook.\nIt gives time for load balancers to remove the pod from rotation before the pod is terminated.\nDefaults to 15 for applicable components. Set to 0 to disable.",
+          "format": "int32",
+          "type": "integer"
         },
         "priorityClassName": {
           "description": "PriorityClassName class assigned to the Pods",

@@ -23,6 +23,77 @@
           "description": "ClusterVersion defines default images tag for all components.\nit can be overwritten with component specific image.tag value.",
           "type": "string"
         },
+        "discovery": {
+          "description": "Discovery configures automatic vmstorage node discovery for vminsert and vmselect.\nThis is an enterprise feature and requires a valid license key.\nSee https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#automatic-vmstorage-discovery",
+          "properties": {
+            "enabled": {
+              "description": "Enabled turns on automatic vmstorage node discovery via DNS SRV records.\nThis is an enterprise feature and requires a valid license key.\nSee https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#automatic-vmstorage-discovery",
+              "type": "boolean"
+            },
+            "filter": {
+              "description": "Filter is an optional regexp filter applied to discovered vmstorage addresses.\nOnly addresses matching the filter are used; non-matching addresses are ignored.",
+              "type": "string"
+            },
+            "interval": {
+              "description": "Interval is the interval for refreshing the vmstorage node list resolved from DNS SRV records.\nThe minimum supported value is 1s.\nDefaults to 2s if not set.",
+              "pattern": "^[0-9]+(s|m|h)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "type": "object"
+        },
+        "downsampling": {
+          "description": "Downsampling defines downsampling rules applied to vmselect and vmstorage components.\nRequires enterprise license. See https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#downsampling",
+          "properties": {
+            "dedupInterval": {
+              "description": "DedupInterval sets the deduplication interval used with downsampling.\nIt corresponds to -dedup.minScrapeInterval flag.\nMust be a multiple of all configured downsampling intervals.",
+              "type": "string"
+            },
+            "rules": {
+              "description": "Rules defines downsampling rules.\nEach rule matches time series by an optional filter and applies downsampling after a given offset.",
+              "items": {
+                "description": "DownsamplingRule defines downsampling periods for an optional label filter.\nAll period intervals must be pairwise multiples of each other.",
+                "properties": {
+                  "filter": {
+                    "description": "Filter is an optional MetricsQL label filter for matching time series.\nIf not set, the rule is applied to all time series.\nExample: '{env=\"prod\"}'",
+                    "type": "string"
+                  },
+                  "periods": {
+                    "description": "Periods defines the downsampling time horizons applied to matching series.",
+                    "items": {
+                      "description": "DownsamplingPeriod defines a single downsampling time horizon.",
+                      "properties": {
+                        "interval": {
+                          "description": "Interval is the target downsampling resolution; only the last sample per interval is kept.\nExample: \"10m\"",
+                          "type": "string"
+                        },
+                        "offset": {
+                          "description": "Offset is the minimum age of data before downsampling is applied.\nExample: \"30d\"",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "interval",
+                        "offset"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "periods"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "imagePullSecrets": {
           "description": "ImagePullSecrets An optional list of references to secrets in the same namespace\nto use for pulling images from registries\nsee https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod",
           "items": {
@@ -184,6 +255,28 @@
               "description": "DisableSelfServiceScrape controls creation of VMServiceScrape by operator\nfor the application.\nHas priority over `VM_DISABLESELFSERVICESCRAPECREATION` operator env variable",
               "type": "boolean"
             },
+            "discovery": {
+              "description": "Discovery overrides the cluster-level discovery config for vminsert.",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled turns on automatic vmstorage node discovery via DNS SRV records.\nThis is an enterprise feature and requires a valid license key.\nSee https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#automatic-vmstorage-discovery",
+                  "type": "boolean"
+                },
+                "filter": {
+                  "description": "Filter is an optional regexp filter applied to discovered vmstorage addresses.\nOnly addresses matching the filter are used; non-matching addresses are ignored.",
+                  "type": "string"
+                },
+                "interval": {
+                  "description": "Interval is the interval for refreshing the vmstorage node list resolved from DNS SRV records.\nThe minimum supported value is 1s.\nDefaults to 2s if not set.",
+                  "pattern": "^[0-9]+(s|m|h)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "type": "object"
+            },
             "dnsConfig": {
               "description": "Specifies the DNS parameters of a pod.\nParameters specified here will be merged to the generated DNS\nconfiguration based on DNSPolicy.",
               "items": {
@@ -231,6 +324,10 @@
             "dnsPolicy": {
               "description": "DNSPolicy sets DNS policy for the pod",
               "type": "string"
+            },
+            "enableServiceLinks": {
+              "description": "EnableServiceLinks indicates whether information about services should be injected into pod's\nenvironment variables, matching the syntax of Docker links.\nOptional: Defaults to true.",
+              "type": "boolean"
             },
             "extraArgs": {
               "additionalProperties": {
@@ -546,6 +643,11 @@
             "port": {
               "description": "Port listen address",
               "type": "string"
+            },
+            "preStopSleepSeconds": {
+              "description": "PreStopSleepSeconds defines the number of seconds to sleep in the preStop lifecycle hook.\nIt gives time for load balancers to remove the pod from rotation before the pod is terminated.\nDefaults to 15 for applicable components. Set to 0 to disable.",
+              "format": "int32",
+              "type": "integer"
             },
             "priorityClassName": {
               "description": "PriorityClassName class assigned to the Pods",
@@ -935,6 +1037,18 @@
                             "description": "Specifies the maximum amount of resources that will be recommended\nfor the container. The default is no maximum.",
                             "type": "object"
                           },
+                          "memoryAggregationIntervalCount": {
+                            "description": "memoryAggregationIntervalCount is the number of consecutive\nmemoryAggregationIntervals which make up the memory aggregation window.\nThe total window length is:\nMemoryAggregationIntervalSeconds * MemoryAggregationIntervalCount.",
+                            "format": "int64",
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "memoryAggregationIntervalSeconds": {
+                            "description": "memoryAggregationIntervalSeconds is the length of a single interval\n(in seconds) for which the peak memory usage is computed.\nMemory usage peaks are aggregated in multiples of this interval.\nIn other words, there is one memory usage sample per interval\n(the maximum usage over that interval).",
+                            "format": "int32",
+                            "minimum": 1,
+                            "type": "integer"
+                          },
                           "minAllowed": {
                             "additionalProperties": {
                               "anyOf": [
@@ -984,6 +1098,62 @@
                             "description": "oomMinBumpUp is the minimum increase in memory when OOM is detected.",
                             "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
                             "x-kubernetes-int-or-string": true
+                          },
+                          "startupBoost": {
+                            "description": "startupBoost specifies the startup boost policy for the container.\nThis overrides any pod-level startup boost policy.\nThe startup boost policy takes precedence over the rest of the fields in\nthis struct, except for ContainerName and ControlledValues.",
+                            "properties": {
+                              "cpu": {
+                                "description": "cpu specifies the CPU startup boost policy.\nIf this field is not set, no startup boost is applied.",
+                                "properties": {
+                                  "durationSeconds": {
+                                    "description": "durationSeconds indicates for how long to keep the pod boosted after it goes to Ready.\nDefaults to 0.",
+                                    "format": "int32",
+                                    "type": "integer"
+                                  },
+                                  "factor": {
+                                    "description": "factor specifies the factor to apply to the resource request.\nThis field is required when Type is \"Factor\".",
+                                    "format": "int32",
+                                    "type": "integer"
+                                  },
+                                  "quantity": {
+                                    "anyOf": [
+                                      {
+                                        "type": "integer"
+                                      },
+                                      {
+                                        "type": "string"
+                                      }
+                                    ],
+                                    "description": "quantity specifies the absolute resource quantity to be used as the\nresource request and limit during the boost phase.\nThis field is required when Type is \"Quantity\".",
+                                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                    "x-kubernetes-int-or-string": true
+                                  },
+                                  "type": {
+                                    "description": "type specifies the kind of boost to apply.\nSupported values are: \"Factor\", \"Quantity\".\nNo startupboost will be applied for unrecognized values.",
+                                    "enum": [
+                                      "Factor",
+                                      "Quantity"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-validations": [
+                                  {
+                                    "message": "factor is required when type is Factor and forbidden otherwise",
+                                    "rule": "(self.type == 'Factor') == has(self.factor)"
+                                  },
+                                  {
+                                    "message": "quantity is required when type is Quantity and forbidden otherwise",
+                                    "rule": "(self.type == 'Quantity') == has(self.quantity)"
+                                  }
+                                ]
+                              }
+                            },
+                            "type": "object"
                           }
                         },
                         "type": "object"
@@ -996,6 +1166,12 @@
                 "updatePolicy": {
                   "description": "UpdatePolicy controls how the autoscaler applies changes to pod resources.",
                   "properties": {
+                    "evictAfterOOMSeconds": {
+                      "description": "evictAfterOOMSeconds specifies the time in seconds to wait after an OOM event before\nconsidering the pod for eviction. Pods that have OOMed in less than this time\nsince start will be evicted.",
+                      "format": "int32",
+                      "minimum": 1,
+                      "type": "integer"
+                    },
                     "evictionRequirements": {
                       "description": "EvictionRequirements is a list of EvictionRequirements that need to\nevaluate to true in order for a Pod to be evicted. If more than one\nEvictionRequirement is specified, all of them need to be fulfilled to allow eviction.",
                       "items": {
@@ -1038,6 +1214,7 @@
                         "Initial",
                         "Recreate",
                         "InPlaceOrRecreate",
+                        "InPlace",
                         "Auto"
                       ],
                       "type": "string"
@@ -1106,6 +1283,28 @@
               "description": "DisableSelfServiceScrape controls creation of VMServiceScrape by operator\nfor the application.\nHas priority over `VM_DISABLESELFSERVICESCRAPECREATION` operator env variable",
               "type": "boolean"
             },
+            "discovery": {
+              "description": "Discovery overrides the cluster-level discovery config for vmselect.",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled turns on automatic vmstorage node discovery via DNS SRV records.\nThis is an enterprise feature and requires a valid license key.\nSee https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#automatic-vmstorage-discovery",
+                  "type": "boolean"
+                },
+                "filter": {
+                  "description": "Filter is an optional regexp filter applied to discovered vmstorage addresses.\nOnly addresses matching the filter are used; non-matching addresses are ignored.",
+                  "type": "string"
+                },
+                "interval": {
+                  "description": "Interval is the interval for refreshing the vmstorage node list resolved from DNS SRV records.\nThe minimum supported value is 1s.\nDefaults to 2s if not set.",
+                  "pattern": "^[0-9]+(s|m|h)$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "type": "object"
+            },
             "dnsConfig": {
               "description": "Specifies the DNS parameters of a pod.\nParameters specified here will be merged to the generated DNS\nconfiguration based on DNSPolicy.",
               "items": {
@@ -1153,6 +1352,10 @@
             "dnsPolicy": {
               "description": "DNSPolicy sets DNS policy for the pod",
               "type": "string"
+            },
+            "enableServiceLinks": {
+              "description": "EnableServiceLinks indicates whether information about services should be injected into pod's\nenvironment variables, matching the syntax of Docker links.\nOptional: Defaults to true.",
+              "type": "boolean"
             },
             "extraArgs": {
               "additionalProperties": {
@@ -1460,6 +1663,11 @@
             "port": {
               "description": "Port listen address",
               "type": "string"
+            },
+            "preStopSleepSeconds": {
+              "description": "PreStopSleepSeconds defines the number of seconds to sleep in the preStop lifecycle hook.\nIt gives time for load balancers to remove the pod from rotation before the pod is terminated.\nDefaults to 15 for applicable components. Set to 0 to disable.",
+              "format": "int32",
+              "type": "integer"
             },
             "priorityClassName": {
               "description": "PriorityClassName class assigned to the Pods",
@@ -2186,6 +2394,18 @@
                             "description": "Specifies the maximum amount of resources that will be recommended\nfor the container. The default is no maximum.",
                             "type": "object"
                           },
+                          "memoryAggregationIntervalCount": {
+                            "description": "memoryAggregationIntervalCount is the number of consecutive\nmemoryAggregationIntervals which make up the memory aggregation window.\nThe total window length is:\nMemoryAggregationIntervalSeconds * MemoryAggregationIntervalCount.",
+                            "format": "int64",
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "memoryAggregationIntervalSeconds": {
+                            "description": "memoryAggregationIntervalSeconds is the length of a single interval\n(in seconds) for which the peak memory usage is computed.\nMemory usage peaks are aggregated in multiples of this interval.\nIn other words, there is one memory usage sample per interval\n(the maximum usage over that interval).",
+                            "format": "int32",
+                            "minimum": 1,
+                            "type": "integer"
+                          },
                           "minAllowed": {
                             "additionalProperties": {
                               "anyOf": [
@@ -2235,6 +2455,62 @@
                             "description": "oomMinBumpUp is the minimum increase in memory when OOM is detected.",
                             "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
                             "x-kubernetes-int-or-string": true
+                          },
+                          "startupBoost": {
+                            "description": "startupBoost specifies the startup boost policy for the container.\nThis overrides any pod-level startup boost policy.\nThe startup boost policy takes precedence over the rest of the fields in\nthis struct, except for ContainerName and ControlledValues.",
+                            "properties": {
+                              "cpu": {
+                                "description": "cpu specifies the CPU startup boost policy.\nIf this field is not set, no startup boost is applied.",
+                                "properties": {
+                                  "durationSeconds": {
+                                    "description": "durationSeconds indicates for how long to keep the pod boosted after it goes to Ready.\nDefaults to 0.",
+                                    "format": "int32",
+                                    "type": "integer"
+                                  },
+                                  "factor": {
+                                    "description": "factor specifies the factor to apply to the resource request.\nThis field is required when Type is \"Factor\".",
+                                    "format": "int32",
+                                    "type": "integer"
+                                  },
+                                  "quantity": {
+                                    "anyOf": [
+                                      {
+                                        "type": "integer"
+                                      },
+                                      {
+                                        "type": "string"
+                                      }
+                                    ],
+                                    "description": "quantity specifies the absolute resource quantity to be used as the\nresource request and limit during the boost phase.\nThis field is required when Type is \"Quantity\".",
+                                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                    "x-kubernetes-int-or-string": true
+                                  },
+                                  "type": {
+                                    "description": "type specifies the kind of boost to apply.\nSupported values are: \"Factor\", \"Quantity\".\nNo startupboost will be applied for unrecognized values.",
+                                    "enum": [
+                                      "Factor",
+                                      "Quantity"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-validations": [
+                                  {
+                                    "message": "factor is required when type is Factor and forbidden otherwise",
+                                    "rule": "(self.type == 'Factor') == has(self.factor)"
+                                  },
+                                  {
+                                    "message": "quantity is required when type is Quantity and forbidden otherwise",
+                                    "rule": "(self.type == 'Quantity') == has(self.quantity)"
+                                  }
+                                ]
+                              }
+                            },
+                            "type": "object"
                           }
                         },
                         "type": "object"
@@ -2247,6 +2523,12 @@
                 "updatePolicy": {
                   "description": "UpdatePolicy controls how the autoscaler applies changes to pod resources.",
                   "properties": {
+                    "evictAfterOOMSeconds": {
+                      "description": "evictAfterOOMSeconds specifies the time in seconds to wait after an OOM event before\nconsidering the pod for eviction. Pods that have OOMed in less than this time\nsince start will be evicted.",
+                      "format": "int32",
+                      "minimum": 1,
+                      "type": "integer"
+                    },
                     "evictionRequirements": {
                       "description": "EvictionRequirements is a list of EvictionRequirements that need to\nevaluate to true in order for a Pod to be evicted. If more than one\nEvictionRequirement is specified, all of them need to be fulfilled to allow eviction.",
                       "items": {
@@ -2289,6 +2571,7 @@
                         "Initial",
                         "Recreate",
                         "InPlaceOrRecreate",
+                        "InPlace",
                         "Auto"
                       ],
                       "type": "string"
@@ -2396,6 +2679,10 @@
             "dnsPolicy": {
               "description": "DNSPolicy sets DNS policy for the pod",
               "type": "string"
+            },
+            "enableServiceLinks": {
+              "description": "EnableServiceLinks indicates whether information about services should be injected into pod's\nenvironment variables, matching the syntax of Docker links.\nOptional: Defaults to true.",
+              "type": "boolean"
             },
             "extraArgs": {
               "additionalProperties": {
@@ -3347,6 +3634,11 @@
               "description": "Port listen address",
               "type": "string"
             },
+            "preStopSleepSeconds": {
+              "description": "PreStopSleepSeconds defines the number of seconds to sleep in the preStop lifecycle hook.\nIt gives time for load balancers to remove the pod from rotation before the pod is terminated.\nDefaults to 15 for applicable components. Set to 0 to disable.",
+              "format": "int32",
+              "type": "integer"
+            },
             "priorityClassName": {
               "description": "PriorityClassName class assigned to the Pods",
               "type": "string"
@@ -3440,6 +3732,28 @@
                 }
               },
               "type": "object"
+            },
+            "retentionFilters": {
+              "description": "RetentionFilters defines per-series retention filters for vmstorage.\nRequires enterprise license. See https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/#retention-filters",
+              "items": {
+                "description": "RetentionFilter defines per-series retention based on a label filter.\nRequires enterprise license.\nSee https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/#retention-filters",
+                "properties": {
+                  "filter": {
+                    "description": "Filter is a MetricsQL label filter for matching time series.\nExample: '{env=\"dev\"}'",
+                    "type": "string"
+                  },
+                  "retention": {
+                    "description": "Retention is the retention period for matching time series.\nMust not exceed the global retentionPeriod.\nExample: \"3d\", \"1w\"",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "filter",
+                  "retention"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "revisionHistoryLimitCount": {
               "description": "The number of old ReplicaSets to retain to allow rollback in deployment or\nmaximum number of revisions that will be maintained in the Deployment revision history.\nHas no effect at StatefulSets\nDefaults to 10.",
@@ -4204,6 +4518,18 @@
                             "description": "Specifies the maximum amount of resources that will be recommended\nfor the container. The default is no maximum.",
                             "type": "object"
                           },
+                          "memoryAggregationIntervalCount": {
+                            "description": "memoryAggregationIntervalCount is the number of consecutive\nmemoryAggregationIntervals which make up the memory aggregation window.\nThe total window length is:\nMemoryAggregationIntervalSeconds * MemoryAggregationIntervalCount.",
+                            "format": "int64",
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "memoryAggregationIntervalSeconds": {
+                            "description": "memoryAggregationIntervalSeconds is the length of a single interval\n(in seconds) for which the peak memory usage is computed.\nMemory usage peaks are aggregated in multiples of this interval.\nIn other words, there is one memory usage sample per interval\n(the maximum usage over that interval).",
+                            "format": "int32",
+                            "minimum": 1,
+                            "type": "integer"
+                          },
                           "minAllowed": {
                             "additionalProperties": {
                               "anyOf": [
@@ -4253,6 +4579,62 @@
                             "description": "oomMinBumpUp is the minimum increase in memory when OOM is detected.",
                             "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
                             "x-kubernetes-int-or-string": true
+                          },
+                          "startupBoost": {
+                            "description": "startupBoost specifies the startup boost policy for the container.\nThis overrides any pod-level startup boost policy.\nThe startup boost policy takes precedence over the rest of the fields in\nthis struct, except for ContainerName and ControlledValues.",
+                            "properties": {
+                              "cpu": {
+                                "description": "cpu specifies the CPU startup boost policy.\nIf this field is not set, no startup boost is applied.",
+                                "properties": {
+                                  "durationSeconds": {
+                                    "description": "durationSeconds indicates for how long to keep the pod boosted after it goes to Ready.\nDefaults to 0.",
+                                    "format": "int32",
+                                    "type": "integer"
+                                  },
+                                  "factor": {
+                                    "description": "factor specifies the factor to apply to the resource request.\nThis field is required when Type is \"Factor\".",
+                                    "format": "int32",
+                                    "type": "integer"
+                                  },
+                                  "quantity": {
+                                    "anyOf": [
+                                      {
+                                        "type": "integer"
+                                      },
+                                      {
+                                        "type": "string"
+                                      }
+                                    ],
+                                    "description": "quantity specifies the absolute resource quantity to be used as the\nresource request and limit during the boost phase.\nThis field is required when Type is \"Quantity\".",
+                                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                    "x-kubernetes-int-or-string": true
+                                  },
+                                  "type": {
+                                    "description": "type specifies the kind of boost to apply.\nSupported values are: \"Factor\", \"Quantity\".\nNo startupboost will be applied for unrecognized values.",
+                                    "enum": [
+                                      "Factor",
+                                      "Quantity"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object",
+                                "x-kubernetes-validations": [
+                                  {
+                                    "message": "factor is required when type is Factor and forbidden otherwise",
+                                    "rule": "(self.type == 'Factor') == has(self.factor)"
+                                  },
+                                  {
+                                    "message": "quantity is required when type is Quantity and forbidden otherwise",
+                                    "rule": "(self.type == 'Quantity') == has(self.quantity)"
+                                  }
+                                ]
+                              }
+                            },
+                            "type": "object"
                           }
                         },
                         "type": "object"
@@ -4265,6 +4647,12 @@
                 "updatePolicy": {
                   "description": "UpdatePolicy controls how the autoscaler applies changes to pod resources.",
                   "properties": {
+                    "evictAfterOOMSeconds": {
+                      "description": "evictAfterOOMSeconds specifies the time in seconds to wait after an OOM event before\nconsidering the pod for eviction. Pods that have OOMed in less than this time\nsince start will be evicted.",
+                      "format": "int32",
+                      "minimum": 1,
+                      "type": "integer"
+                    },
                     "evictionRequirements": {
                       "description": "EvictionRequirements is a list of EvictionRequirements that need to\nevaluate to true in order for a Pod to be evicted. If more than one\nEvictionRequirement is specified, all of them need to be fulfilled to allow eviction.",
                       "items": {
@@ -4307,6 +4695,7 @@
                         "Initial",
                         "Recreate",
                         "InPlaceOrRecreate",
+                        "InPlace",
                         "Auto"
                       ],
                       "type": "string"

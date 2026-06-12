@@ -408,6 +408,10 @@
           "description": "DNSPolicy sets DNS policy for the pod",
           "type": "string"
         },
+        "enableServiceLinks": {
+          "description": "EnableServiceLinks indicates whether information about services should be injected into pod's\nenvironment variables, matching the syntax of Docker links.\nOptional: Defaults to true.",
+          "type": "boolean"
+        },
         "extraArgs": {
           "additionalProperties": {
             "type": "string"
@@ -851,6 +855,11 @@
         "port": {
           "description": "Port listen address",
           "type": "string"
+        },
+        "preStopSleepSeconds": {
+          "description": "PreStopSleepSeconds defines the number of seconds to sleep in the preStop lifecycle hook.\nIt gives time for load balancers to remove the pod from rotation before the pod is terminated.\nDefaults to 15 for applicable components. Set to 0 to disable.",
+          "format": "int32",
+          "type": "integer"
         },
         "priorityClassName": {
           "description": "PriorityClassName class assigned to the Pods",

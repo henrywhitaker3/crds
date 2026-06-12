@@ -525,6 +525,10 @@
           "description": "DNSPolicy sets DNS policy for the pod",
           "type": "string"
         },
+        "enableServiceLinks": {
+          "description": "EnableServiceLinks indicates whether information about services should be injected into pod's\nenvironment variables, matching the syntax of Docker links.\nOptional: Defaults to true.",
+          "type": "boolean"
+        },
         "extraArgs": {
           "additionalProperties": {
             "type": "string"
@@ -1177,6 +1181,11 @@
           "description": "Port listen address",
           "type": "string"
         },
+        "preStopSleepSeconds": {
+          "description": "PreStopSleepSeconds defines the number of seconds to sleep in the preStop lifecycle hook.\nIt gives time for load balancers to remove the pod from rotation before the pod is terminated.\nDefaults to 15 for applicable components. Set to 0 to disable.",
+          "format": "int32",
+          "type": "integer"
+        },
         "priorityClassName": {
           "description": "PriorityClassName class assigned to the Pods",
           "type": "string"
@@ -1302,6 +1311,10 @@
             "maxPointsPerQuery": {
               "description": "Optional argoverrides how search.maxPointsPerTimeseries flagimpacts vmanomaly on splitting long fitWindow queries into smaller sub-intervals",
               "type": "integer"
+            },
+            "offset": {
+              "description": "Offset adds a time shift to the query window for all queries, e.g. to account for delayed data ingestion",
+              "type": "string"
             },
             "queryFromLastSeenTimestamp": {
               "description": "If True, then query will be performed from the last seen timestamp for a given series.",
@@ -1477,7 +1490,7 @@
               "type": "object"
             },
             "tz": {
-              "description": "Optional argumentspecifies the IANA timezone to account for local shifts, like DST, in models sensitive to seasonal patterns",
+              "description": "Optional argument specifies the IANA timezone to account for local shifts, like DST, in models sensitive to seasonal patterns",
               "type": "string"
             }
           },
@@ -1619,7 +1632,6 @@
             },
             "maxConcurrentTasks": {
               "description": "MaxConcurrentTasks defines maximum number of concurrent anomaly detection tasks",
-              "maximum": 20,
               "minimum": 1,
               "type": "integer"
             },
@@ -1634,6 +1646,10 @@
             "uiDefaultState": {
               "description": "UIDefaultState defines default query state for anomaly UI",
               "type": "string"
+            },
+            "useReaderConnectionSettings": {
+              "description": "UseReaderConnectionSettings when set to true, anomaly UI reuses connection settings\n(credentials, TLS, etc.) from the reader configuration to connect to datasources",
+              "type": "boolean"
             }
           },
           "type": "object"
@@ -2216,6 +2232,11 @@
                 }
               },
               "type": "object"
+            },
+            "connectionRetryAttempts": {
+              "description": "ConnectionRetryAttempts defines the number of attempts to retry the connection in case of failure",
+              "minimum": 1,
+              "type": "integer"
             },
             "datasourceURL": {
               "description": "DatasourceURL defines remote write url for write requests\nprovided endpoint must serve /api/v1/import path\nvmanomaly joins datasourceURL + \"/api/v1/import\"",
