@@ -1,7 +1,7 @@
 crds:
   - group: dragonflydb.io
     # renovate: datasource=github-tags depName=dragonflydb/dragonfly-operator
-    ref: v1.5.0
+    ref: v1.6.0
     template: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/refs/tags/{{ version }}/config/crd/bases/dragonflydb.io_{{ name }}.yaml
     names:
       - dragonflies
