@@ -15,6 +15,7 @@ import (
 	"sync"
 
 	"go.yaml.in/yaml/v3"
+	"golang.org/x/sync/singleflight"
 )
 
 type CRD struct {
@@ -55,12 +56,20 @@ func (c *CRD) Write() error {
 var (
 	cache   = map[string][]map[string]any{}
 	cacheMu = &sync.RWMutex{}
+	dedupe  = &singleflight.Group{}
 )
 
 // Get fetches content from a URL and returns parsed crds from it.
 // It will return separate CRDs if there are multiple documents in
 // the response body, and strip helm tags from the content too.
 func Get(ctx context.Context, url string) ([]map[string]any, error) {
+	out, err, _ := dedupe.Do(url, func() (any, error) {
+		return get(ctx, url)
+	})
+	return out.([]map[string]any), err
+}
+
+func get(ctx context.Context, url string) ([]map[string]any, error) {
 	cacheMu.RLock()
 	if val, ok := cache[url]; ok {
 		cacheMu.RUnlock()
