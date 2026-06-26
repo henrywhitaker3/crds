@@ -6,6 +6,10 @@
     {
       "matchFileNames": ["crds.yaml"],
       "automerge": true
+    },
+    {
+      "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy"]
     }
   ],
   "customManagers": [
