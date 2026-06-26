@@ -42,12 +42,12 @@
               "description": "XForwardedForSettings provides configuration for using X-Forwarded-For headers for determining the client IP address.",
               "properties": {
                 "numTrustedHops": {
-                  "description": "NumTrustedHops specifies how many trusted hops to count from the rightmost side of\nthe X-Forwarded-For (XFF) header when determining the original client\u2019s IP address.\n\nIf NumTrustedHops is set to N, the client IP is taken from the Nth address from the\nright end of the XFF header.\n\nExample:\n  XFF = \"203.0.113.128, 203.0.113.10, 203.0.113.1\"\n  NumTrustedHops = 2\n  \u2192 Trusted client address = 203.0.113.10\n\nOnly one of NumTrustedHops or TrustedCIDRs should be configured.",
+                  "description": "NumTrustedHops specifies how many trusted hops to count from the rightmost side of\nthe X-Forwarded-For (XFF) header when determining the original client’s IP address.\n\nIf NumTrustedHops is set to N, the client IP is taken from the Nth address from the\nright end of the XFF header.\n\nExample:\n  XFF = \"203.0.113.128, 203.0.113.10, 203.0.113.1\"\n  NumTrustedHops = 2\n  → Trusted client address = 203.0.113.10\n\nOnly one of NumTrustedHops or TrustedCIDRs should be configured.",
                   "format": "int32",
                   "type": "integer"
                 },
                 "trustedCIDRs": {
-                  "description": "TrustedCIDRs is a list of CIDR ranges to trust when evaluating\nthe remote IP address to determine the original client\u2019s IP address.\nWhen the remote IP address matches a trusted CIDR and the x-forwarded-for header was sent,\neach entry in the x-forwarded-for header is evaluated from right to left\nand the first public non-trusted address is used as the original client address.\nIf all addresses in x-forwarded-for are within the trusted list, the first (leftmost) entry is used.\nOnly one of NumTrustedHops and TrustedCIDRs must be set.",
+                  "description": "TrustedCIDRs is a list of CIDR ranges to trust when evaluating\nthe remote IP address to determine the original client’s IP address.\nWhen the remote IP address matches a trusted CIDR and the x-forwarded-for header was sent,\neach entry in the x-forwarded-for header is evaluated from right to left\nand the first public non-trusted address is used as the original client address.\nIf all addresses in x-forwarded-for are within the trusted list, the first (leftmost) entry is used.\nOnly one of NumTrustedHops and TrustedCIDRs must be set.",
                   "items": {
                     "description": "CIDR defines a CIDR Address range.\nA CIDR can be an IPv4 address range such as \"192.168.1.0/24\" or an IPv6 address range such as \"2001:0db8:11a3:09d7::/64\".",
                     "pattern": "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\/([0-9]+))|((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))\\/([0-9]+))",
@@ -1356,7 +1356,7 @@
               "type": "array"
             },
             "fingerprints": {
-              "description": "Fingerprints specifies TLS client fingerprinting.\nWhen specified, a JAX fingerprint derived from the client\u2019s TLS handshake\nis generated. The fingerprint can be logged in access logs or\nforwarded to upstream services using request headers.\n\nFingerprinting is disabled if not specified.\n\nSupported values are:\n- JA3\n- JA4",
+              "description": "Fingerprints specifies TLS client fingerprinting.\nWhen specified, a JAX fingerprint derived from the client’s TLS handshake\nis generated. The fingerprint can be logged in access logs or\nforwarded to upstream services using request headers.\n\nFingerprinting is disabled if not specified.\n\nSupported values are:\n- JA3\n- JA4",
               "items": {
                 "description": "TLSFingerprintType specifies the TLS client fingerprinting mode.",
                 "enum": [

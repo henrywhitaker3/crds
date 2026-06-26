@@ -467,21 +467,21 @@
                   "type": "string"
                 }
               ],
-              "description": "BufferLimit Soft limit on size of the cluster\u2019s connections read and write buffers.\nBufferLimit applies to connection streaming (maybe non-streaming) channel between processes, it's in user space.\nIf unspecified, an implementation defined default is applied (32768 bytes).\nFor example, 20Mi, 1Gi, 256Ki etc.\nNote: that when the suffix is not provided, the value is interpreted as bytes.",
+              "description": "BufferLimit Soft limit on size of the cluster’s connections read and write buffers.\nBufferLimit applies to connection streaming (maybe non-streaming) channel between processes, it's in user space.\nIf unspecified, an implementation defined default is applied (32768 bytes).\nFor example, 20Mi, 1Gi, 256Ki etc.\nNote: that when the suffix is not provided, the value is interpreted as bytes.",
               "x-kubernetes-int-or-string": true
             },
             "preconnect": {
-              "description": "Preconnect configures proactive upstream connections to reduce latency by establishing\nconnections before they\u2019re needed and avoiding connection establishment overhead.\n\nIf unset, Envoy will fetch connections as needed to serve in-flight requests.",
+              "description": "Preconnect configures proactive upstream connections to reduce latency by establishing\nconnections before they’re needed and avoiding connection establishment overhead.\n\nIf unset, Envoy will fetch connections as needed to serve in-flight requests.",
               "properties": {
                 "perEndpointPercent": {
-                  "description": "PerEndpointPercent configures how many additional connections to maintain per\nupstream endpoint, useful for high-QPS or latency sensitive services. Expressed as a\npercentage of the connections required by active streams\n(e.g. 100 = preconnect disabled, 105 = 1.05x connections per-endpoint, 200 = 2.00\u00d7).\n\nAllowed value range is between 100-300. When both PerEndpointPercent and\nPredictivePercent are set, Envoy ensures both are satisfied (max of the two).",
+                  "description": "PerEndpointPercent configures how many additional connections to maintain per\nupstream endpoint, useful for high-QPS or latency sensitive services. Expressed as a\npercentage of the connections required by active streams\n(e.g. 100 = preconnect disabled, 105 = 1.05x connections per-endpoint, 200 = 2.00×).\n\nAllowed value range is between 100-300. When both PerEndpointPercent and\nPredictivePercent are set, Envoy ensures both are satisfied (max of the two).",
                   "format": "int32",
                   "maximum": 300,
                   "minimum": 100,
                   "type": "integer"
                 },
                 "predictivePercent": {
-                  "description": "PredictivePercent configures how many additional connections to maintain\nacross the cluster by anticipating which upstream endpoint the load balancer\nwill select next, useful for low-QPS services. Relies on deterministic\nloadbalancing and is only supported with Random or RoundRobin.\nExpressed as a percentage of the connections required by active streams\n(e.g. 100 = 1.0 (no preconnect), 105 = 1.05\u00d7 connections across the cluster, 200 = 2.00\u00d7).\n\nMinimum allowed value is 100. When both PerEndpointPercent and PredictivePercent are\nset Envoy ensures both are satisfied per host (max of the two).",
+                  "description": "PredictivePercent configures how many additional connections to maintain\nacross the cluster by anticipating which upstream endpoint the load balancer\nwill select next, useful for low-QPS services. Relies on deterministic\nloadbalancing and is only supported with Random or RoundRobin.\nExpressed as a percentage of the connections required by active streams\n(e.g. 100 = 1.0 (no preconnect), 105 = 1.05× connections across the cluster, 200 = 2.00×).\n\nMinimum allowed value is 100. When both PerEndpointPercent and PredictivePercent are\nset Envoy ensures both are satisfied per host (max of the two).",
                   "format": "int32",
                   "minimum": 100,
                   "type": "integer"
@@ -532,7 +532,7 @@
               "type": "string"
             },
             "respectDnsTtl": {
-              "description": "RespectDNSTTL indicates whether the DNS Time-To-Live (TTL) should be respected.\nIf the value is set to true, the DNS refresh rate will be set to the resource record\u2019s TTL.\nDefaults to true.",
+              "description": "RespectDNSTTL indicates whether the DNS Time-To-Live (TTL) should be respected.\nIf the value is set to true, the DNS refresh rate will be set to the resource record’s TTL.\nDefaults to true.",
               "type": "boolean"
             }
           },

@@ -314,6 +314,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -560,10 +564,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "resourceGroup": {
                 "description": "Optional resource group name. Limits discovery to this resource group.",
@@ -1053,6 +1053,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -1299,10 +1303,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "scheme": {
                 "description": "HTTP Scheme default \"http\"",
@@ -1757,6 +1757,10 @@
                 "description": "Admin Partitions are only supported in Consul Enterprise.",
                 "type": "string"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -2003,10 +2007,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "scheme": {
                 "description": "HTTP Scheme default \"http\"",
@@ -2448,6 +2448,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -2694,10 +2698,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "server": {
                 "description": "Server is an optional DigitalOcean API server to query.\nBy default, https://api.digitalocean.com is used.",
@@ -3157,6 +3157,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -3403,10 +3407,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "tlsConfig": {
                 "description": "TLS configuration to use on every scrape request",
@@ -3819,6 +3819,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -4065,10 +4069,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "role": {
                 "description": "Role of the target in Docker Swarm.",
@@ -4551,6 +4551,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -4797,10 +4801,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "server": {
                 "description": "Server is an optional URL to connect to the Eureka server.\nBy default, the http://localhost:8080/eureka/v2 is used.",
@@ -5248,6 +5248,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -5494,10 +5498,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "role": {
                 "description": "Role defines mandatory Hetzner role for entity discovery.",
@@ -5896,6 +5896,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -6142,10 +6146,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "tlsConfig": {
                 "description": "TLS configuration to use on every scrape request",
@@ -6571,6 +6571,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -6817,10 +6821,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "role": {
                 "description": "Role of the Kubernetes entities that should be discovered.",
@@ -7251,6 +7251,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -7497,10 +7501,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "server": {
                 "description": "Server must contain the URL of Kuma Control Plane's MADS xDS server.",
@@ -7886,6 +7886,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -8133,10 +8137,6 @@
                 },
                 "type": "object"
               },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
-              },
               "servers": {
                 "description": "Servers is a list of Marathon servers.",
                 "items": {
@@ -8352,13 +8352,6 @@
                 "description": "Separator placed between concatenated source label values. default is ';'.",
                 "type": "string"
               },
-              "source_labels": {
-                "description": "UnderScoreSourceLabels - additional form of source labels source_labels\nfor compatibility with original relabel config.\nif set both sourceLabels and source_labels, sourceLabels has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
               "sourceLabels": {
                 "description": "The source labels select values from existing labels. Their content is concatenated\nusing the configured separator and matched against the configured regular expression\nfor the replace, keep, and drop actions.",
                 "items": {
@@ -8366,12 +8359,19 @@
                 },
                 "type": "array"
               },
-              "target_label": {
-                "description": "UnderScoreTargetLabel - additional form of target label - target_label\nfor compatibility with original relabel config.\nif set both targetLabel and target_label, targetLabel has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
-                "type": "string"
+              "source_labels": {
+                "description": "UnderScoreSourceLabels - additional form of source labels source_labels\nfor compatibility with original relabel config.\nif set both sourceLabels and source_labels, sourceLabels has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
               },
               "targetLabel": {
                 "description": "Label to which the resulting value is written in a replace action.\nIt is mandatory for replace actions. Regex capture groups are available.",
+                "type": "string"
+              },
+              "target_label": {
+                "description": "UnderScoreTargetLabel - additional form of target label - target_label\nfor compatibility with original relabel config.\nif set both targetLabel and target_label, targetLabel has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
                 "type": "string"
               }
             },
@@ -8605,6 +8605,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -8851,10 +8855,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "region": {
                 "description": "Region to use for Nomad service discovery.",
@@ -9704,6 +9704,10 @@
                 ],
                 "type": "object"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -9950,10 +9954,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "service": {
                 "description": "Service could be either `vps` or `dedicated_server`",
@@ -10374,6 +10374,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -10621,10 +10625,6 @@
                 },
                 "type": "object"
               },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
-              },
               "query": {
                 "description": "Query defines PQL query that allows to filter discovered resources.",
                 "type": "string"
@@ -10836,13 +10836,6 @@
                 "description": "Separator placed between concatenated source label values. default is ';'.",
                 "type": "string"
               },
-              "source_labels": {
-                "description": "UnderScoreSourceLabels - additional form of source labels source_labels\nfor compatibility with original relabel config.\nif set both sourceLabels and source_labels, sourceLabels has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
               "sourceLabels": {
                 "description": "The source labels select values from existing labels. Their content is concatenated\nusing the configured separator and matched against the configured regular expression\nfor the replace, keep, and drop actions.",
                 "items": {
@@ -10850,12 +10843,19 @@
                 },
                 "type": "array"
               },
-              "target_label": {
-                "description": "UnderScoreTargetLabel - additional form of target label - target_label\nfor compatibility with original relabel config.\nif set both targetLabel and target_label, targetLabel has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
-                "type": "string"
+              "source_labels": {
+                "description": "UnderScoreSourceLabels - additional form of source labels source_labels\nfor compatibility with original relabel config.\nif set both sourceLabels and source_labels, sourceLabels has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
               },
               "targetLabel": {
                 "description": "Label to which the resulting value is written in a replace action.\nIt is mandatory for replace actions. Regex capture groups are available.",
+                "type": "string"
+              },
+              "target_label": {
+                "description": "UnderScoreTargetLabel - additional form of target label - target_label\nfor compatibility with original relabel config.\nif set both targetLabel and target_label, targetLabel has priority.\nfor details https://github.com/VictoriaMetrics/operator/issues/131",
                 "type": "string"
               }
             },
@@ -10877,16 +10877,16 @@
           ],
           "type": "string"
         },
-        "scrape_interval": {
-          "description": "ScrapeInterval is the same as Interval and has priority over it.\none of scrape_interval or interval can be used",
-          "type": "string"
-        },
         "scrapeClass": {
           "description": "ScrapeClass defined scrape class to apply",
           "type": "string"
         },
         "scrapeTimeout": {
           "description": "Timeout after which the scrape is ended",
+          "type": "string"
+        },
+        "scrape_interval": {
+          "description": "ScrapeInterval is the same as Interval and has priority over it.\none of scrape_interval or interval can be used",
           "type": "string"
         },
         "seriesLimit": {
@@ -11590,6 +11590,10 @@
                 "format": "int32",
                 "type": "integer"
               },
+              "proxyURL": {
+                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
+                "type": "string"
+              },
               "proxy_client_config": {
                 "description": "ProxyClientConfig configures proxy auth settings for scraping\nSee [feature description](https://docs.victoriametrics.com/victoriametrics/vmagent/#scraping-targets-via-a-proxy)",
                 "properties": {
@@ -11836,10 +11840,6 @@
                   }
                 },
                 "type": "object"
-              },
-              "proxyURL": {
-                "description": "ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.",
-                "type": "string"
               },
               "region": {
                 "description": "Region is an optional query arguments to filter instances by region id.",

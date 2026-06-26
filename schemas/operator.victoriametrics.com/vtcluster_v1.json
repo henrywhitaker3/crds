@@ -205,31 +205,6 @@
               },
               "type": "array"
             },
-            "host_aliases": {
-              "description": "HostAliasesUnderScore provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.\nHas Priority over hostAliases field",
-              "items": {
-                "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the\npod's hosts file.",
-                "properties": {
-                  "hostnames": {
-                    "description": "Hostnames for the above IP address.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "x-kubernetes-list-type": "atomic"
-                  },
-                  "ip": {
-                    "description": "IP address of the host file entry.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "ip"
-                ],
-                "type": "object"
-              },
-              "type": "array"
-            },
             "hostAliases": {
               "description": "HostAliases provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.",
               "items": {
@@ -258,6 +233,31 @@
             "hostNetwork": {
               "description": "HostNetwork controls whether the pod may use the node network namespace",
               "type": "boolean"
+            },
+            "host_aliases": {
+              "description": "HostAliasesUnderScore provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.\nHas Priority over hostAliases field",
+              "items": {
+                "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the\npod's hosts file.",
+                "properties": {
+                  "hostnames": {
+                    "description": "Hostnames for the above IP address.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "ip": {
+                    "description": "IP address of the host file entry.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ip"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "hpa": {
               "description": "Configures horizontal pod autoscaling.",
@@ -1234,31 +1234,6 @@
               },
               "type": "array"
             },
-            "host_aliases": {
-              "description": "HostAliasesUnderScore provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.\nHas Priority over hostAliases field",
-              "items": {
-                "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the\npod's hosts file.",
-                "properties": {
-                  "hostnames": {
-                    "description": "Hostnames for the above IP address.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "x-kubernetes-list-type": "atomic"
-                  },
-                  "ip": {
-                    "description": "IP address of the host file entry.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "ip"
-                ],
-                "type": "object"
-              },
-              "type": "array"
-            },
             "hostAliases": {
               "description": "HostAliases provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.",
               "items": {
@@ -1287,6 +1262,31 @@
             "hostNetwork": {
               "description": "HostNetwork controls whether the pod may use the node network namespace",
               "type": "boolean"
+            },
+            "host_aliases": {
+              "description": "HostAliasesUnderScore provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.\nHas Priority over hostAliases field",
+              "items": {
+                "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the\npod's hosts file.",
+                "properties": {
+                  "hostnames": {
+                    "description": "Hostnames for the above IP address.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "ip": {
+                    "description": "IP address of the host file entry.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ip"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "hpa": {
               "description": "Configures horizontal pod autoscaling.",
@@ -2220,31 +2220,6 @@
               "pattern": "^[0-9]+(h|d|w|y)?$",
               "type": "string"
             },
-            "host_aliases": {
-              "description": "HostAliasesUnderScore provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.\nHas Priority over hostAliases field",
-              "items": {
-                "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the\npod's hosts file.",
-                "properties": {
-                  "hostnames": {
-                    "description": "Hostnames for the above IP address.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array",
-                    "x-kubernetes-list-type": "atomic"
-                  },
-                  "ip": {
-                    "description": "IP address of the host file entry.",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "ip"
-                ],
-                "type": "object"
-              },
-              "type": "array"
-            },
             "hostAliases": {
               "description": "HostAliases provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.",
               "items": {
@@ -2273,6 +2248,31 @@
             "hostNetwork": {
               "description": "HostNetwork controls whether the pod may use the node network namespace",
               "type": "boolean"
+            },
+            "host_aliases": {
+              "description": "HostAliasesUnderScore provides mapping for ip and hostname,\nthat would be propagated to pod,\ncannot be used with HostNetwork.\nHas Priority over hostAliases field",
+              "items": {
+                "description": "HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the\npod's hosts file.",
+                "properties": {
+                  "hostnames": {
+                    "description": "Hostnames for the above IP address.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "x-kubernetes-list-type": "atomic"
+                  },
+                  "ip": {
+                    "description": "IP address of the host file entry.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ip"
+                ],
+                "type": "object"
+              },
+              "type": "array"
             },
             "hpa": {
               "description": "Configures horizontal pod autoscaling.\nNote, downscaling is not supported.",

@@ -236,7 +236,7 @@
               "type": "array"
             },
             "fingerprints": {
-              "description": "Fingerprints specifies TLS client fingerprinting.\nWhen specified, a JAX fingerprint derived from the client\u2019s TLS handshake\nis generated. The fingerprint can be logged in access logs or\nforwarded to upstream services using request headers.\n\nFingerprinting is disabled if not specified.\n\nSupported values are:\n- JA3\n- JA4",
+              "description": "Fingerprints specifies TLS client fingerprinting.\nWhen specified, a JAX fingerprint derived from the client’s TLS handshake\nis generated. The fingerprint can be logged in access logs or\nforwarded to upstream services using request headers.\n\nFingerprinting is disabled if not specified.\n\nSupported values are:\n- JA3\n- JA4",
               "items": {
                 "description": "TLSFingerprintType specifies the TLS client fingerprinting mode.",
                 "enum": [

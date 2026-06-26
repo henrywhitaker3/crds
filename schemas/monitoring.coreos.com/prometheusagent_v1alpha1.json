@@ -4242,7 +4242,7 @@
           "type": "object"
         },
         "overrideHonorLabels": {
-          "description": "overrideHonorLabels when true, Prometheus resolves label conflicts by renaming the labels in the scraped data\n to \u201cexported_\u201d for all targets created from ServiceMonitor, PodMonitor and\nScrapeConfig objects. Otherwise the HonorLabels field of the service or pod monitor applies.\nIn practice,`OverrideHonorLabels:true` enforces `honorLabels:false`\nfor all ServiceMonitor, PodMonitor and ScrapeConfig objects.",
+          "description": "overrideHonorLabels when true, Prometheus resolves label conflicts by renaming the labels in the scraped data\n to “exported_” for all targets created from ServiceMonitor, PodMonitor and\nScrapeConfig objects. Otherwise the HonorLabels field of the service or pod monitor applies.\nIn practice,`OverrideHonorLabels:true` enforces `honorLabels:false`\nfor all ServiceMonitor, PodMonitor and ScrapeConfig objects.",
           "type": "boolean"
         },
         "overrideHonorTimestamps": {
@@ -9080,6 +9080,14 @@
                   },
                   "type": "array"
                 },
+                "clientAuthType": {
+                  "description": "clientAuthType defines the server policy for client TLS authentication.\n\nFor more detail on clientAuth options:\nhttps://golang.org/pkg/crypto/tls/#ClientAuthType",
+                  "type": "string"
+                },
+                "clientCAFile": {
+                  "description": "clientCAFile defines the path to the CA certificate file for client certificate authentication to\nthe server.\n\nIt is mutually exclusive with `client_ca`.",
+                  "type": "string"
+                },
                 "client_ca": {
                   "description": "client_ca defines the Secret or ConfigMap containing the CA certificate for client certificate\nauthentication to the server.\n\nIt is mutually exclusive with `clientCAFile`.",
                   "properties": {
@@ -9131,14 +9139,6 @@
                     }
                   },
                   "type": "object"
-                },
-                "clientAuthType": {
-                  "description": "clientAuthType defines the server policy for client TLS authentication.\n\nFor more detail on clientAuth options:\nhttps://golang.org/pkg/crypto/tls/#ClientAuthType",
-                  "type": "string"
-                },
-                "clientCAFile": {
-                  "description": "clientCAFile defines the path to the CA certificate file for client certificate authentication to\nthe server.\n\nIt is mutually exclusive with `client_ca`.",
-                  "type": "string"
                 },
                 "curvePreferences": {
                   "description": "curvePreferences defines elliptic curves that will be used in an ECDHE handshake, in preference\norder.\n\nAvailable curves are documented in the Go documentation:\nhttps://golang.org/pkg/crypto/tls/#CurveID",
