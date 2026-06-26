@@ -10,11 +10,9 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-      - name: Generate schemas
-        run: |
-          uv python install
-          uv sync --locked --all-extras --dev
-          uv run src/main.py
+      - uses: actions/checkout@v7.0.0
+      - uses: actions/setup-go@v6.5.0
+        with:
+          go-version-file: go.mod
+      - name: Generate
+        run: go run main.go
