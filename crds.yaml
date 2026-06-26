@@ -77,7 +77,8 @@ crds:
       - pushsecrets
       - secretstores
 
-  - group: generators.external-secrets.io
+  - group: external-secrets.io
+    subgroup: generators.external-secrets.io
     # renovate: datasource=github-tags depName=external-secrets/external-secrets
     ref: v2.7.0
     template: https://raw.githubusercontent.com/external-secrets/external-secrets/refs/tags/{{ version }}/config/crds/bases/generators.external-secrets.io_{{ name }}.yaml
@@ -141,8 +142,7 @@ crds:
       - applicationset
       - appproject
 
-  - group: kyverno
-    subgroup: kyverno.io
+  - group: kyverno.io
     # renovate: datasource=github-tags depName=kyverno/kyverno
     ref: v1.18.1
     template: https://raw.githubusercontent.com/kyverno/kyverno/refs/tags/{{ version }}/config/crds/kyverno/kyverno.io_{{ name }}.yaml
@@ -155,7 +155,7 @@ crds:
       - policyexceptions
       - updaterequests
 
-  - group: kyverno
+  - group: kyverno.io
     subgroup: policies.kyverno.io
     # renovate: datasource=github-tags depName=kyverno/kyverno
     ref: v1.18.1
