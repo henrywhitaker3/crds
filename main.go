@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"log/slog"
+	"os"
 	"os/signal"
 	"syscall"
 
@@ -14,6 +16,10 @@ import (
 func main() {
 	conf, err := config.LoadConfig("crds.yaml")
 	die(err)
+
+	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+	})))
 
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
 	defer cancel()
@@ -35,6 +41,7 @@ func processCollections(ctx context.Context, colls []config.Collection) error {
 	errGrp, ctx := errgroup.WithContext(ctx)
 
 	for _, c := range colls {
+		slog.Debug("processing collection", "collection", c)
 		errGrp.Go(func() error {
 			crds, err := processor.ProcessCollection(ctx, c)
 			if err != nil {
@@ -56,6 +63,7 @@ func processCRDs(ctx context.Context, crds []config.CRD) error {
 	errGrp, ctx := errgroup.WithContext(ctx)
 
 	for _, c := range crds {
+		slog.Debug("processing crd", "crd", c)
 		out, err := processor.ProcessCRD(ctx, c)
 		if err != nil {
 			return err
@@ -65,7 +73,6 @@ func processCRDs(ctx context.Context, crds []config.CRD) error {
 				return fmt.Errorf("write crd: %w", err)
 			}
 		}
-		return nil
 	}
 
 	return errGrp.Wait()
