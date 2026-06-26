@@ -111,7 +111,8 @@ crds:
       - clusterissuers
       - issuers
 
-  - group: acme.cert-manager.io
+  - group: cert-manager.io
+    subgroup: acme.cert-manager.io
     # renovate: datasource=github-tags depName=cert-manager/cert-manager
     ref: v1.20.3
     template: https://raw.githubusercontent.com/cert-manager/cert-manager/refs/tags/{{ version }}/deploy/crds/acme.cert-manager.io_{{ name }}.yaml
