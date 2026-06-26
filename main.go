@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"os/signal"
+	"runtime"
 	"syscall"
 
 	"github.com/henrywhitaker3/crds/internal/config"
@@ -39,6 +40,7 @@ var ()
 
 func processCollections(ctx context.Context, colls []config.Collection) error {
 	errGrp, ctx := errgroup.WithContext(ctx)
+	errGrp.SetLimit(runtime.NumCPU() * 2)
 
 	for _, c := range colls {
 		slog.Debug("processing collection", "collection", c)
@@ -61,6 +63,7 @@ func processCollections(ctx context.Context, colls []config.Collection) error {
 
 func processCRDs(ctx context.Context, crds []config.CRD) error {
 	errGrp, ctx := errgroup.WithContext(ctx)
+	errGrp.SetLimit(runtime.NumCPU() * 2)
 
 	for _, c := range crds {
 		slog.Debug("processing crd", "crd", c)
