@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -11,15 +12,33 @@ import (
 
 	"github.com/henrywhitaker3/crds/internal/config"
 	"github.com/henrywhitaker3/crds/internal/processor"
+	"github.com/spf13/pflag"
 	"golang.org/x/sync/errgroup"
 )
 
+var (
+	logLevel   string = "info"
+	configPath string = "crds.yaml"
+)
+
 func main() {
-	conf, err := config.LoadConfig("crds.yaml")
-	die(err)
+	flags := pflag.NewFlagSet("flags", pflag.ExitOnError)
+	flags.StringVar(&logLevel, "log-level", "info", "The log verbosity")
+	flags.StringVarP(&configPath, "config", "c", "crds.yaml", "The path to the config file")
+
+	if err := flags.Parse(os.Args); err != nil {
+		fmt.Println(err)
+		os.Exit(2)
+	}
+
+	conf, err := config.LoadConfig(configPath)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-		Level: slog.LevelDebug,
+		Level: slogLevel(logLevel),
 	})))
 
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
@@ -33,7 +52,10 @@ func main() {
 		return processCRDs(ctx, conf.CRDs)
 	})
 
-	die(errGrp.Wait())
+	if err := errGrp.Wait(); err != nil {
+		slog.Error("failed processing", "error", err)
+		os.Exit(1)
+	}
 }
 
 var ()
@@ -42,47 +64,86 @@ func processCollections(ctx context.Context, colls []config.Collection) error {
 	errGrp, ctx := errgroup.WithContext(ctx)
 	errGrp.SetLimit(runtime.NumCPU() * 2)
 
+	out := []error{}
+
 	for _, c := range colls {
-		slog.Debug("processing collection", "collection", c)
+		slog := slog.With("collection", c)
+		slog.Debug("processing collection")
 		errGrp.Go(func() error {
 			crds, err := processor.ProcessCollection(ctx, c)
 			if err != nil {
-				return fmt.Errorf("process coll %s: %w", c.Group, err)
+				out = append(out, err)
+				slog.Error("process collection", "error", err)
+				return nil
 			}
 			for _, crd := range crds {
 				if err := crd.Write(); err != nil {
-					return fmt.Errorf("write crd: %w", err)
+					out = append(out, err)
+					slog.Error("write crd", "error", err)
+					return nil
 				}
 			}
 			return nil
 		})
 	}
 
-	return errGrp.Wait()
+	if err := errGrp.Wait(); err != nil {
+		return err
+	}
+
+	if len(out) > 0 {
+		return errors.Join(out...)
+	}
+
+	return nil
 }
 
 func processCRDs(ctx context.Context, crds []config.CRD) error {
 	errGrp, ctx := errgroup.WithContext(ctx)
 	errGrp.SetLimit(runtime.NumCPU() * 2)
 
+	outErr := []error{}
+
 	for _, c := range crds {
-		slog.Debug("processing crd", "crd", c)
+		slog := slog.With("crd", c)
+		slog.Debug("processing crd")
 		out, err := processor.ProcessCRD(ctx, c)
 		if err != nil {
-			return err
+			outErr = append(outErr, err)
+			slog.Error("process crd", "error", err)
+			continue
 		}
 		for _, crd := range out {
 			if err := crd.Write(); err != nil {
-				return fmt.Errorf("write crd: %w", err)
+				slog.Error("write crd", "error", err)
+				outErr = append(outErr, err)
+				continue
 			}
 		}
 	}
 
-	return errGrp.Wait()
+	if err := errGrp.Wait(); err != nil {
+		return err
+	}
+
+	if len(outErr) > 0 {
+		return errors.Join(outErr...)
+	}
+
+	return nil
 }
 
-func die(err error) {
-	if err != nil {
-		panic(err)
+func slogLevel(level string) slog.Level {
+	switch level {
+	case "error":
+		return slog.LevelError
+	case "warn":
+		return slog.LevelWarn
+	case "debug":
+		return slog.LevelDebug
+	case "info":
+		fallthrough
+	default:
+		return slog.LevelInfo
 	}
 }
