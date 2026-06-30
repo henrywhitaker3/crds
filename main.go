@@ -2,18 +2,15 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log/slog"
 	"os"
 	"os/signal"
-	"runtime"
 	"syscall"
 
 	"github.com/henrywhitaker3/crds/internal/config"
 	"github.com/henrywhitaker3/crds/internal/processor"
 	"github.com/spf13/pflag"
-	"golang.org/x/sync/errgroup"
 )
 
 var (
@@ -44,93 +41,10 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
 	defer cancel()
 
-	errGrp, ctx := errgroup.WithContext(ctx)
-	errGrp.Go(func() error {
-		return processCollections(ctx, conf.Collections)
-	})
-	errGrp.Go(func() error {
-		return processCRDs(ctx, conf.CRDs)
-	})
-
-	if err := errGrp.Wait(); err != nil {
+	if err := processor.Process(ctx, conf.CRDs, conf.Collections); err != nil {
 		slog.Error("failed processing", "error", err)
 		os.Exit(1)
 	}
-}
-
-var ()
-
-func processCollections(ctx context.Context, colls []config.Collection) error {
-	errGrp, ctx := errgroup.WithContext(ctx)
-	errGrp.SetLimit(runtime.NumCPU() * 2)
-
-	out := []error{}
-
-	for _, c := range colls {
-		slog := slog.With("collection", c)
-		slog.Debug("processing collection")
-		errGrp.Go(func() error {
-			crds, err := processor.ProcessCollection(ctx, c)
-			if err != nil {
-				out = append(out, err)
-				slog.Error("process collection", "error", err)
-				return nil
-			}
-			for _, crd := range crds {
-				if err := crd.Write(); err != nil {
-					out = append(out, err)
-					slog.Error("write crd", "error", err)
-					return nil
-				}
-			}
-			return nil
-		})
-	}
-
-	if err := errGrp.Wait(); err != nil {
-		return err
-	}
-
-	if len(out) > 0 {
-		return errors.Join(out...)
-	}
-
-	return nil
-}
-
-func processCRDs(ctx context.Context, crds []config.CRD) error {
-	errGrp, ctx := errgroup.WithContext(ctx)
-	errGrp.SetLimit(runtime.NumCPU() * 2)
-
-	outErr := []error{}
-
-	for _, c := range crds {
-		slog := slog.With("crd", c)
-		slog.Debug("processing crd")
-		out, err := processor.ProcessCRD(ctx, c)
-		if err != nil {
-			outErr = append(outErr, err)
-			slog.Error("process crd", "error", err)
-			continue
-		}
-		for _, crd := range out {
-			if err := crd.Write(); err != nil {
-				slog.Error("write crd", "error", err)
-				outErr = append(outErr, err)
-				continue
-			}
-		}
-	}
-
-	if err := errGrp.Wait(); err != nil {
-		return err
-	}
-
-	if len(outErr) > 0 {
-		return errors.Join(outErr...)
-	}
-
-	return nil
 }
 
 func slogLevel(level string) slog.Level {

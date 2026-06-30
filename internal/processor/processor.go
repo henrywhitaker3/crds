@@ -7,16 +7,132 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"sync"
 
+	"github.com/henrywhitaker3/crds/internal/config"
 	"go.yaml.in/yaml/v3"
+	"golang.org/x/sync/errgroup"
 	"golang.org/x/sync/singleflight"
 )
+
+type processed struct {
+	items []*CRD
+	mu    *sync.Mutex
+}
+
+func (p *processed) push(c *CRD) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	p.items = append(p.items, c)
+}
+
+func Process(ctx context.Context, crds []config.CRD, colls []config.Collection) error {
+	proc := &processed{
+		items: []*CRD{},
+		mu:    &sync.Mutex{},
+	}
+
+	errGrp, ctx := errgroup.WithContext(ctx)
+	errGrp.Go(func() error {
+		return processCollections(ctx, colls, proc)
+	})
+	errGrp.Go(func() error {
+		return processCRDs(ctx, crds, proc)
+	})
+	if err := errGrp.Wait(); err != nil {
+		return err
+	}
+
+	slog.Info("finished processing crds", "count", len(proc.items))
+	orphans, _ := findOrphans("schemas", proc)
+	if len(orphans) > 0 {
+		slog.Warn("found orphaned crds", "count", len(orphans), "orphans", orphans)
+	}
+
+	return nil
+}
+
+func processCollections(ctx context.Context, colls []config.Collection, proc *processed) error {
+	errGrp, ctx := errgroup.WithContext(ctx)
+	errGrp.SetLimit(runtime.NumCPU() * 2)
+
+	out := []error{}
+
+	for _, c := range colls {
+		slog := slog.With("collection", c)
+		slog.Debug("processing collection")
+		errGrp.Go(func() error {
+			crds, err := ProcessCollection(ctx, c)
+			if err != nil {
+				out = append(out, err)
+				slog.Error("process collection", "error", err)
+				return nil
+			}
+			for _, crd := range crds {
+				if err := crd.Write(); err != nil {
+					out = append(out, err)
+					slog.Error("write crd", "error", err)
+					return nil
+				}
+				proc.push(crd)
+			}
+			return nil
+		})
+	}
+
+	if err := errGrp.Wait(); err != nil {
+		return err
+	}
+
+	if len(out) > 0 {
+		return errors.Join(out...)
+	}
+
+	return nil
+}
+
+func processCRDs(ctx context.Context, crds []config.CRD, proc *processed) error {
+	errGrp, ctx := errgroup.WithContext(ctx)
+	errGrp.SetLimit(runtime.NumCPU() * 2)
+
+	outErr := []error{}
+
+	for _, c := range crds {
+		slog := slog.With("crd", c)
+		slog.Debug("processing crd")
+		out, err := ProcessCRD(ctx, c)
+		if err != nil {
+			outErr = append(outErr, err)
+			slog.Error("process crd", "error", err)
+			continue
+		}
+		for _, crd := range out {
+			if err := crd.Write(); err != nil {
+				slog.Error("write crd", "error", err)
+				outErr = append(outErr, err)
+				continue
+			}
+			proc.push(crd)
+		}
+	}
+
+	if err := errGrp.Wait(); err != nil {
+		return err
+	}
+
+	if len(outErr) > 0 {
+		return errors.Join(outErr...)
+	}
+
+	return nil
+}
 
 type CRD struct {
 	Group   string
@@ -26,14 +142,17 @@ type CRD struct {
 	Schema  map[string]any
 }
 
-func (c *CRD) Write() error {
+func (c *CRD) Path() string {
 	nameParts := []string{"schemas"}
 	if c.Parent != nil {
 		nameParts = append(nameParts, *c.Parent)
 	}
 	nameParts = append(nameParts, c.Group, fmt.Sprintf("%s_%s.json", c.Kind, c.Version))
-	name := filepath.Join(nameParts...)
+	return filepath.Join(nameParts...)
+}
 
+func (c *CRD) Write() error {
+	name := c.Path()
 	if err := os.MkdirAll(filepath.Dir(name), 0755); err != nil {
 		return fmt.Errorf("ensure directory exists: %w", err)
 	}
