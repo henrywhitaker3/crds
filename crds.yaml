@@ -183,7 +183,7 @@ crds:
 
   - group: monitoring.coreos.com
     # renovate: datasource=github-tags depName=prometheus-operator/prometheus-operator
-    ref: v0.92.0
+    ref: v0.92.1
     template: https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/refs/tags/{{ version }}/example/prometheus-operator-crd-full/monitoring.coreos.com_{{ name }}.yaml
     names:
       - alertmanagerconfigs
