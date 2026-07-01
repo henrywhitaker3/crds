@@ -1761,7 +1761,7 @@
                         "properties": {
                           "requests": {
                             "description": "Requests is the number of requests (or cost units, when used with\ncost-based rate limiting) allowed per Unit.",
-                            "format": "int32",
+                            "format": "int64",
                             "maximum": 4294967295,
                             "minimum": 1,
                             "type": "integer"
@@ -2115,7 +2115,7 @@
                         "properties": {
                           "requests": {
                             "description": "Requests is the number of requests (or cost units, when used with\ncost-based rate limiting) allowed per Unit.",
-                            "format": "int32",
+                            "format": "int64",
                             "maximum": 4294967295,
                             "minimum": 1,
                             "type": "integer"
