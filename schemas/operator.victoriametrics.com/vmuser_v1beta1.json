@@ -15,6 +15,25 @@
     "spec": {
       "description": "VMUserSpec defines the desired state of VMUser",
       "properties": {
+        "access_log": {
+          "description": "AccessLog configures per-user access logging.\nWhen set, vmauth logs each request for this user with fields including\nrequest_uri, status_code, duration_ms, username, etc.\nSee https://docs.victoriametrics.com/victoriametrics/vmauth/#access-log\n\navailable since v1.138.0 vmauth version",
+          "properties": {
+            "filters": {
+              "description": "Filters defines optional filters that control which requests are logged.",
+              "properties": {
+                "skip_status_codes": {
+                  "description": "SkipStatusCodes lists HTTP status codes whose responses are excluded from the access log.\nFor example, [200, 204] suppresses logging of successful responses.",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
         "bearerToken": {
           "description": "BearerToken Authorization header value for accessing protected endpoint.",
           "type": "string"
@@ -272,6 +291,10 @@
                         "namespace": {
                           "description": "Namespace of the target Kubernetes object",
                           "type": "string"
+                        },
+                        "useExtraService": {
+                          "description": "UseExtraService instructs the operator to prefer the CR's additional service\n(created via spec.serviceSpec) over the default service when building the target URL.",
+                          "type": "boolean"
                         }
                       },
                       "required": [
@@ -281,6 +304,10 @@
                       "type": "object"
                     },
                     "type": "array"
+                  },
+                  "useExtraService": {
+                    "description": "UseExtraService instructs the operator to prefer the CR's additional service\n(created via spec.serviceSpec) over the default service when building the target URL.",
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -640,6 +667,10 @@
           ],
           "type": "object",
           "x-kubernetes-map-type": "atomic"
+        },
+        "useLegacyNaming": {
+          "description": "UseLegacyNaming uses standalone Helm chart naming for managed resources:\nthe CR name is used directly instead of the default \"<type>-<name>\" convention.",
+          "type": "boolean"
         },
         "username": {
           "description": "Username basic auth user name for accessing protected endpoint,\nwill be replaced with metadata.name of VMUser if omitted.",

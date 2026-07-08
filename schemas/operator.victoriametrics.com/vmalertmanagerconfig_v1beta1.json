@@ -55,11 +55,11 @@
                 "items": {
                   "properties": {
                     "avatar_url": {
-                      "description": "AvatarURL defines message avatar URL\nAvailable from operator v0.55.0 and alertmanager v0.28.0",
+                      "description": "AvatarURL defines message avatar URL\nAvailable from alertmanager v0.28.0",
                       "type": "string"
                     },
                     "content": {
-                      "description": "Content defines message content template\nAvailable from operator v0.55.0 and alertmanager v0.28.0",
+                      "description": "Content defines message content template\nAvailable from alertmanager v0.28.0",
                       "maxLength": 2000,
                       "type": "string"
                     },
@@ -284,7 +284,7 @@
                               "type": "object"
                             },
                             "proxy_url": {
-                              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                               "type": "string"
                             },
                             "scopes": {
@@ -295,7 +295,7 @@
                               "type": "array"
                             },
                             "tls_config": {
-                              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                               "x-kubernetes-preserve-unknown-fields": true
                             },
                             "token_url": {
@@ -518,7 +518,7 @@
                       "type": "string"
                     },
                     "username": {
-                      "description": "Username defines message username\nAvailable from operator v0.55.0 and alertmanager v0.28.0",
+                      "description": "Username defines message username\nAvailable from alertmanager v0.28.0",
                       "type": "string"
                     },
                     "webhook_url": {
@@ -811,7 +811,7 @@
               },
               "incidentio_configs": {
                 "items": {
-                  "description": "IncidentioConfig configures notifications via incident.io.\nhttps://prometheus.io/docs/alerting/latest/configuration/#incidentio_config\navailable from v0.66.0 operator version\nand v0.29.0 alertmanager version",
+                  "description": "IncidentioConfig configures notifications via incident.io.\nhttps://prometheus.io/docs/alerting/latest/configuration/#incidentio_config\nAvailable from v0.29.0 alertmanager version",
                   "properties": {
                     "alert_source_token": {
                       "description": "AlertSourceToken is used to authenticate with incident.io.\nMutually exclusive with AlertSourceTokenFile.",
@@ -870,7 +870,7 @@
               },
               "jira_configs": {
                 "items": {
-                  "description": "JiraConfig represent alertmanager's jira_config entry\nhttps://prometheus.io/docs/alerting/latest/configuration/#jira_config\navailable from v0.55.0 operator version\nand v0.28.0 alertmanager version",
+                  "description": "JiraConfig represent alertmanager's jira_config entry\nhttps://prometheus.io/docs/alerting/latest/configuration/#jira_config\nAvailable from v0.28.0 alertmanager version",
                   "properties": {
                     "api_url": {
                       "description": "The URL to send API requests to. The full API path must be included.\nExample: https://company.atlassian.net/rest/api/2/",
@@ -1322,7 +1322,7 @@
                               "type": "object"
                             },
                             "proxy_url": {
-                              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                               "type": "string"
                             },
                             "scopes": {
@@ -1333,7 +1333,7 @@
                               "type": "array"
                             },
                             "tls_config": {
-                              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                               "x-kubernetes-preserve-unknown-fields": true
                             },
                             "token_url": {
@@ -1589,7 +1589,7 @@
               },
               "msteamsv2_configs": {
                 "items": {
-                  "description": "MSTeamsV2Config sends notifications using the new message format with adaptive cards as required by flows.\nhttps://support.microsoft.com/en-gb/office/create-incoming-webhooks-with-workflows-for-microsoft-teams-8ae491c7-0394-4861-ba59-055e33f75498\navailable from v0.55.0 operator version\nand v0.28.0 alertmanager version",
+                  "description": "MSTeamsV2Config sends notifications using the new message format with adaptive cards as required by flows.\nhttps://support.microsoft.com/en-gb/office/create-incoming-webhooks-with-workflows-for-microsoft-teams-8ae491c7-0394-4861-ba59-055e33f75498\nAvailable from v0.28.0 alertmanager version",
                   "properties": {
                     "http_config": {
                       "x-kubernetes-preserve-unknown-fields": true
@@ -1806,7 +1806,7 @@
                     "images": {
                       "description": "Images to attach to the incident.",
                       "items": {
-                        "description": "ImageConfig is used to attach images to the incident.\nSee https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTgx-send-an-alert-event#the-images-property\nfor more information.",
+                        "description": "ImageConfig is used to attach images to the incident.\nSee https://developer.pagerduty.com/docs/send-alert-event#the-images-property\nfor more information.",
                         "properties": {
                           "alt": {
                             "type": "string"
@@ -1828,7 +1828,7 @@
                     "links": {
                       "description": "Links to attach to the incident.",
                       "items": {
-                        "description": "LinkConfig is used to attach text links to the incident.\nSee https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTgx-send-an-alert-event#the-links-property\nfor more information.",
+                        "description": "LinkConfig is used to attach text links to the incident.\nSee https://developer.pagerduty.com/docs/send-alert-event#the-links-property\nfor more information.",
                         "properties": {
                           "href": {
                             "type": "string"
@@ -2010,7 +2010,7 @@
               },
               "rocketchat_configs": {
                 "items": {
-                  "description": "RocketchatConfig configures notifications via Rocketchat.\nhttps://prometheus.io/docs/alerting/latest/configuration/#rocketchat_config\navailable from v0.55.0 operator version\nand v0.28.0 alertmanager version",
+                  "description": "RocketchatConfig configures notifications via Rocketchat.\nhttps://prometheus.io/docs/alerting/latest/configuration/#rocketchat_config\nAvailable from v0.28.0 alertmanager version",
                   "properties": {
                     "actions": {
                       "items": {
@@ -2048,7 +2048,7 @@
                     },
                     "fields": {
                       "items": {
-                        "description": "RocketchatAttachmentField defines API fields\nhttps://developer.rocket.chat/reference/api/rest-api/endpoints/messaging/chat-endpoints/postmessage#attachment-field-objects",
+                        "description": "RocketchatAttachmentField defines API fields\nhttps://developer.rocket.chat/apidocs/post-message",
                         "properties": {
                           "short": {
                             "type": "boolean"
@@ -2119,7 +2119,7 @@
                       "x-kubernetes-map-type": "atomic"
                     },
                     "token_id": {
-                      "description": "The sender token and token_id\nSee https://docs.rocket.chat/use-rocket.chat/user-guides/user-panel/my-account#personal-access-tokens",
+                      "description": "The sender token and token_id\nSee https://docs.rocket.chat/docs/manage-personal-access-tokens",
                       "properties": {
                         "key": {
                           "description": "The key of the secret to select from.  Must be a valid secret key.",
@@ -2154,7 +2154,7 @@
                     "actions": {
                       "description": "A list of Slack actions that are sent with each notification.",
                       "items": {
-                        "description": "SlackAction configures a single Slack action that is sent with each\nnotification.\nSee https://api.slack.com/docs/message-attachments#action_fields and\nhttps://api.slack.com/docs/message-buttons for more information.",
+                        "description": "SlackAction configures a single Slack action that is sent with each\nnotification.\nSee https://docs.slack.dev/legacy/legacy-messaging/legacy-interactive-message-field-guide/#action_fields and\nhttps://api.slack.com/docs/message-buttons for more information.",
                         "properties": {
                           "confirm": {
                             "description": "SlackConfirmationField protect users from destructive actions or\nparticularly distinguished decisions by asking them to confirm their button\nclick one more time.\nSee https://api.slack.com/docs/interactive-message-field-guide#confirmation_fields\nfor more information.",
@@ -2246,7 +2246,7 @@
                     "fields": {
                       "description": "A list of Slack fields that are sent with each notification.",
                       "items": {
-                        "description": "SlackField configures a single Slack field that is sent with each notification.\nSee https://api.slack.com/docs/message-attachments#fields for more information.",
+                        "description": "SlackField configures a single Slack field that is sent with each notification.\nSee https://docs.slack.dev/legacy/legacy-messaging/legacy-secondary-message-attachments/#field_objects for more information.",
                         "properties": {
                           "short": {
                             "type": "boolean"
@@ -2563,7 +2563,7 @@
                               "type": "object"
                             },
                             "proxy_url": {
-                              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                               "type": "string"
                             },
                             "scopes": {
@@ -2574,7 +2574,7 @@
                               "type": "array"
                             },
                             "tls_config": {
-                              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                               "x-kubernetes-preserve-unknown-fields": true
                             },
                             "token_url": {
@@ -3214,7 +3214,7 @@
                               "type": "object"
                             },
                             "proxy_url": {
-                              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                               "type": "string"
                             },
                             "scopes": {
@@ -3225,7 +3225,7 @@
                               "type": "array"
                             },
                             "tls_config": {
-                              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                               "x-kubernetes-preserve-unknown-fields": true
                             },
                             "token_url": {
@@ -3691,7 +3691,7 @@
                               "type": "object"
                             },
                             "proxy_url": {
-                              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                               "type": "string"
                             },
                             "scopes": {
@@ -3702,7 +3702,7 @@
                               "type": "array"
                             },
                             "tls_config": {
-                              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                               "x-kubernetes-preserve-unknown-fields": true
                             },
                             "token_url": {
@@ -4249,7 +4249,7 @@
                               "type": "object"
                             },
                             "proxy_url": {
-                              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                               "type": "string"
                             },
                             "scopes": {
@@ -4260,7 +4260,7 @@
                               "type": "array"
                             },
                             "tls_config": {
-                              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                               "x-kubernetes-preserve-unknown-fields": true
                             },
                             "token_url": {

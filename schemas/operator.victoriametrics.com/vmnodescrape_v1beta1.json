@@ -318,7 +318,7 @@
               "type": "object"
             },
             "proxy_url": {
-              "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+              "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
               "type": "string"
             },
             "scopes": {
@@ -329,7 +329,7 @@
               "type": "array"
             },
             "tls_config": {
-              "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+              "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
               "x-kubernetes-preserve-unknown-fields": true
             },
             "token_url": {
@@ -904,7 +904,7 @@
                       "type": "object"
                     },
                     "proxy_url": {
-                      "description": "The proxy URL for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                      "description": "The proxy URL for token_url connection\nIs only supported by Scrape objects family",
                       "type": "string"
                     },
                     "scopes": {
@@ -915,7 +915,7 @@
                       "type": "array"
                     },
                     "tls_config": {
-                      "description": "TLSConfig for token_url connection\n( available from v0.55.0).\nIs only supported by Scrape objects family",
+                      "description": "TLSConfig for token_url connection\nIs only supported by Scrape objects family",
                       "x-kubernetes-preserve-unknown-fields": true
                     },
                     "token_url": {
