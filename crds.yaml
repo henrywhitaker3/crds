@@ -145,7 +145,7 @@ crds:
 
   - group: kyverno.io
     # renovate: datasource=github-tags depName=kyverno/kyverno
-    ref: v1.18.1
+    ref: v1.18.2
     template: https://raw.githubusercontent.com/kyverno/kyverno/refs/tags/{{ version }}/config/crds/kyverno/kyverno.io_{{ name }}.yaml
     names:
       - cleanuppolicies
@@ -159,7 +159,7 @@ crds:
   - group: kyverno.io
     subgroup: policies.kyverno.io
     # renovate: datasource=github-tags depName=kyverno/kyverno
-    ref: v1.18.1
+    ref: v1.18.2
     template: https://raw.githubusercontent.com/kyverno/kyverno/refs/tags/{{ version }}/config/crds/policies.kyverno.io/policies.kyverno.io_{{ name }}.yaml
     names:
       - deletingpolicies
