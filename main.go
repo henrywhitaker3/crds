@@ -16,11 +16,13 @@ import (
 var (
 	logLevel   string = "info"
 	configPath string = "crds.yaml"
+	prune      bool   = false
 )
 
 func main() {
 	flags := pflag.NewFlagSet("flags", pflag.ExitOnError)
 	flags.StringVar(&logLevel, "log-level", "info", "The log verbosity")
+	flags.BoolVar(&prune, "prune", false, "Whether to prune orphaned schemas")
 	flags.StringVarP(&configPath, "config", "c", "crds.yaml", "The path to the config file")
 
 	if err := flags.Parse(os.Args); err != nil {
@@ -41,7 +43,7 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
 	defer cancel()
 
-	if err := processor.Process(ctx, conf.CRDs, conf.Collections); err != nil {
+	if err := processor.Process(ctx, conf.CRDs, conf.Collections, prune); err != nil {
 		slog.Error("failed processing", "error", err)
 		os.Exit(1)
 	}

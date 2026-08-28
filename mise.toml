@@ -1,2 +1,10 @@
 [tools]
 go = "1.27.0"
+
+[tasks.generate]
+description = "Generate CRD schemas"
+run = "go run main.go"
+
+[tasks.prune]
+description = "Prune orhpaned CRD schemas"
+run = "go run main.go --prune"

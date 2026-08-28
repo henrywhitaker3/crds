@@ -33,7 +33,7 @@ func (p *processed) push(c *CRD) {
 	p.items = append(p.items, c)
 }
 
-func Process(ctx context.Context, crds []config.CRD, colls []config.Collection) error {
+func Process(ctx context.Context, crds []config.CRD, colls []config.Collection, prune bool) error {
 	proc := &processed{
 		items: []*CRD{},
 		mu:    &sync.Mutex{},
@@ -54,8 +54,22 @@ func Process(ctx context.Context, crds []config.CRD, colls []config.Collection) 
 	orphans, _ := findOrphans("schemas", proc)
 	if len(orphans) > 0 {
 		slog.Warn("found orphaned crds", "count", len(orphans), "orphans", orphans)
+		if prune {
+			if err := deleteOrphans(orphans); err != nil {
+				return err
+			}
+		}
 	}
 
+	return nil
+}
+
+func deleteOrphans(paths []string) error {
+	for _, p := range paths {
+		if err := os.Remove(p); err != nil {
+			return fmt.Errorf("prune %s: %w", p, err)
+		}
+	}
 	return nil
 }
 
