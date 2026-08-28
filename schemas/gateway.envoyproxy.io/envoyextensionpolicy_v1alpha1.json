@@ -1980,7 +1980,7 @@
                         "type": "string"
                       },
                       "tls": {
-                        "description": "TLS configuration when connecting to the Wasm code source.",
+                        "description": "TLS configuration when connecting to the Wasm code source.\nIf unset, system trust store is used for HTTPS url.",
                         "properties": {
                           "caCertificateRef": {
                             "description": "CACertificateRef contains a reference to\nKubernetes objects that contain TLS certificates of\nthe Certificate Authorities that can be used\nas a trust anchor to validate the certificates presented by the Wasm code source.\n\nKubernetes ConfigMap, Kubernetes Secret, and Kubernetes ClusterTrustBundle are supported.",
@@ -2087,7 +2087,7 @@
                         "type": "string"
                       },
                       "tls": {
-                        "description": "TLS configuration when connecting to the Wasm code source.",
+                        "description": "TLS configuration when connecting to the Wasm code source.\nIf unset, system trust store is used.",
                         "properties": {
                           "caCertificateRef": {
                             "description": "CACertificateRef contains a reference to\nKubernetes objects that contain TLS certificates of\nthe Certificate Authorities that can be used\nas a trust anchor to validate the certificates presented by the Wasm code source.\n\nKubernetes ConfigMap, Kubernetes Secret, and Kubernetes ClusterTrustBundle are supported.",
