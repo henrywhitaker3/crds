@@ -227,9 +227,28 @@ crds:
   - group: rabbitmq.com
     # renovate: datasource=github-tags depName=rabbitmq/cluster-operator
     ref: v2.22.5
-    template: https://raw.githubusercontent.com/rabbitmq/cluster-operator/refs/tags/v2.22.5/config/crd/bases/rabbitmq.com_{{ name }}.yaml
+    template: https://raw.githubusercontent.com/rabbitmq/cluster-operator/refs/tags/{{ version }}/config/crd/bases/rabbitmq.com_{{ name }}.yaml
     names:
       - rabbitmqclusters
+
+  - group: rabbitmq.com
+    # renovate: datasource=github-tags depName=messaging-topology-operator
+    ref: v1.20.2
+    template: https://raw.githubusercontent.com/rabbitmq/messaging-topology-operator/refs/tags/{{ version }}/config/crd/bases/rabbitmq.com_{{ name }}.yaml
+    names:
+      - bindings
+      - exchanges
+      - federations
+      - operatorpolicies
+      - permissions
+      - policies
+      - queues
+      - schemareplications
+      - shovels
+      - superstreams
+      - topicpermissions
+      - users
+      - vhosts
 
 collections:
   - group: networking.istio.io
