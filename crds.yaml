@@ -224,6 +224,13 @@ crds:
       - opentelemetrycollectors
       - targetallocators
 
+  - group: rabbitmq.com
+    # renovate: datasource=github-tags depName=rabbitmq/cluster-operator
+    ref: v2.22.5
+    template: https://raw.githubusercontent.com/rabbitmq/cluster-operator/refs/tags/v2.22.5/config/crd/bases/rabbitmq.com_{{ name }}.yaml
+    names:
+      - rabbitmqclusters
+
 collections:
   - group: networking.istio.io
     parent: istio.io
