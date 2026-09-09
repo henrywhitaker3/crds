@@ -233,7 +233,7 @@ crds:
 
   - group: rabbitmq.com
     # renovate: datasource=github-tags depName=rabbitmq/messaging-topology-operator
-    ref: v1.20.2
+    ref: v1.20.3
     template: https://raw.githubusercontent.com/rabbitmq/messaging-topology-operator/refs/tags/{{ version }}/config/crd/bases/rabbitmq.com_{{ name }}.yaml
     names:
       - bindings
