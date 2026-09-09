@@ -226,7 +226,7 @@ crds:
 
   - group: rabbitmq.com
     # renovate: datasource=github-tags depName=rabbitmq/cluster-operator
-    ref: v2.22.5
+    ref: v2.23.0
     template: https://raw.githubusercontent.com/rabbitmq/cluster-operator/refs/tags/{{ version }}/config/crd/bases/rabbitmq.com_{{ name }}.yaml
     names:
       - rabbitmqclusters
