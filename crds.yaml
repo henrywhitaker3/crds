@@ -232,7 +232,7 @@ crds:
       - rabbitmqclusters
 
   - group: rabbitmq.com
-    # renovate: datasource=github-tags depName=messaging-topology-operator
+    # renovate: datasource=github-tags depName=rabbitmq/messaging-topology-operator
     ref: v1.20.2
     template: https://raw.githubusercontent.com/rabbitmq/messaging-topology-operator/refs/tags/{{ version }}/config/crd/bases/rabbitmq.com_{{ name }}.yaml
     names:
@@ -249,6 +249,13 @@ crds:
       - topicpermissions
       - users
       - vhosts
+
+  - group: karpenter.azure.com
+    # renovate: datasource=github-tags depName=Azure/karpenter-provider-azure
+    ref: v1.14.2
+    template: https://raw.githubusercontent.com/Azure/karpenter-provider-azure/refs/tags/{{ version }}/charts/karpenter-crd/templates/karpenter.azure.com_{{ name }}.yaml
+    names:
+      - aksnodeclasses
 
 collections:
   - group: networking.istio.io
