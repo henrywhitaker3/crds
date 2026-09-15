@@ -257,6 +257,13 @@ crds:
     names:
       - aksnodeclasses
 
+  - group: kiali.io
+    # renovate: datasource=github-tags depName=kiali/kiali-operator
+    ref: v2.32.0
+    template: https://raw.githubusercontent.com/kiali/kiali-operator/refs/tags/{{ version }}/crd-docs/crd/kiali.io_{{ name }}.yaml
+    names:
+      - kialis
+
 collections:
   - group: networking.istio.io
     parent: istio.io
