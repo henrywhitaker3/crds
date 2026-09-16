@@ -264,6 +264,29 @@ crds:
     names:
       - kialis
 
+  - group: cilium.io
+    # renovate: datasource=github-tags depName=kiali/kiali-operator
+    ref: v1.20.2
+    template: https://raw.githubusercontent.com/cilium/cilium/refs/tags/{{ version }}/pkg/k8s/apis/cilium.io/client/crds/v2/{{ name }}.yaml
+    names:
+      - ciliumbgpadvertisements
+      - ciliumbgpclusterconfigs
+      - ciliumbgpnodeconfigoverrides
+      - ciliumbgpnodeconfigs
+      - ciliumbgppeerconfigs
+      - ciliumcidrgroups
+      - ciliumclusterwideenvoyconfigs
+      - ciliumclusterwidenetworkpolicies
+      - ciliumegressgatewaypolicies
+      - ciliumendpoints
+      - ciliumenvoyconfigs
+      - ciliumidentities
+      - ciliumloadbalancerippools
+      - ciliumlocalredirectpolicies
+      - ciliumnetworkpolicies
+      - ciliumnodeconfigs
+      - ciliumnodes
+
 collections:
   - group: networking.istio.io
     parent: istio.io
