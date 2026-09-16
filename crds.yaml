@@ -265,7 +265,7 @@ crds:
       - kialis
 
   - group: cilium.io
-    # renovate: datasource=github-tags depName=kiali/kiali-operator
+    # renovate: datasource=github-tags depName=cilium/cilium
     ref: v1.20.2
     template: https://raw.githubusercontent.com/cilium/cilium/refs/tags/{{ version }}/pkg/k8s/apis/cilium.io/client/crds/v2/{{ name }}.yaml
     names:
@@ -286,6 +286,17 @@ crds:
       - ciliumnetworkpolicies
       - ciliumnodeconfigs
       - ciliumnodes
+
+  - group: cilium.io
+    # renovate: datasource=github-tags depName=cilium/cilium
+    ref: v1.20.2
+    template: https://raw.githubusercontent.com/cilium/cilium/refs/tags/{{ version }}/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/{{ name }}.yaml
+    names:
+      - ciliumdatapathplugins
+      - ciliumendpointslices
+      - ciliumgatewayclassconfigs
+      - ciliuml2announcementpolicies
+      - ciliumpodippools
 
 collections:
   - group: networking.istio.io
