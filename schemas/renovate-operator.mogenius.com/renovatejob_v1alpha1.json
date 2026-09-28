@@ -2656,7 +2656,7 @@
           "type": "object"
         },
         "image": {
-          "description": "Renovate Docker image to use",
+          "description": "Renovate Docker image to use. Required, but may be inherited from templateRef,\nso it can be left unset here.",
           "type": "string"
         },
         "imagePullSecrets": {
@@ -2701,7 +2701,7 @@
           "type": "object"
         },
         "parallelism": {
-          "description": "Maximum number of projects to process in parallel",
+          "description": "Maximum number of projects to process in parallel. Required, but may be\ninherited from templateRef, so it can be left unset here.",
           "format": "int32",
           "type": "integer"
         },
@@ -2710,7 +2710,7 @@
           "type": "string"
         },
         "provider": {
-          "description": "Renovate Provider Information to fill \"RENOVATE_ENDPOINT\" and \"RENOVATE_PLATFORM\" environment variables in the renovate container",
+          "description": "Renovate Provider Information to fill \"RENOVATE_ENDPOINT\" and \"RENOVATE_PLATFORM\" environment variables in the renovate container.\nRequired, but may be inherited from templateRef, so it can be left unset here.",
           "properties": {
             "endpoint": {
               "description": "Endpoint is the platform API base URL. Its host must be listed in the\noperator's policy.allowedHosts, otherwise the job is refused.",
@@ -2845,7 +2845,7 @@
           "type": "string"
         },
         "schedule": {
-          "description": "Cron schedule in standard cron format",
+          "description": "Cron schedule in standard cron format. Required, but may be inherited from\ntemplateRef, so it can be left unset here.",
           "type": "string"
         },
         "scratchVolume": {
@@ -3380,12 +3380,36 @@
           "type": "object"
         },
         "skipForks": {
-          "description": "If true, forked repositories discovered during autodiscovery will be excluded by querying the platform API",
+          "description": "If true, forked repositories discovered during autodiscovery will be excluded by querying the platform API.\nA pointer so an unset value inherits from templateRef while an explicit false overrides an inherited true.",
           "type": "boolean"
         },
         "skipPendingDeletion": {
-          "description": "If true, repositories marked for delayed deletion (pending deletion) will be excluded by querying the platform API. Only GitLab exposes this state.",
+          "description": "If true, repositories marked for delayed deletion (pending deletion) will be excluded by querying the platform API. Only GitLab exposes this state.\nA pointer so an unset value inherits from templateRef while an explicit false overrides an inherited true.",
           "type": "boolean"
+        },
+        "templateRef": {
+          "description": "TemplateRef inherits shared configuration from a RenovateJobTemplate (in the\nsame namespace) or a cluster-scoped ClusterRenovateJobTemplate. Fields set on\nthis RenovateJob override the template's per field; fields left unset are\ninherited. A templateRef set on a template itself is ignored: templates do not\nnest.",
+          "properties": {
+            "kind": {
+              "default": "RenovateJobTemplate",
+              "description": "Kind of the referenced template. Defaults to RenovateJobTemplate.",
+              "enum": [
+                "RenovateJobTemplate",
+                "ClusterRenovateJobTemplate"
+              ],
+              "type": "string"
+            },
+            "name": {
+              "description": "Name of the referenced template.",
+              "maxLength": 253,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
         },
         "tolerations": {
           "description": "Tolerations for scheduling the resulting pod",
@@ -3579,12 +3603,6 @@
           "type": "object"
         }
       },
-      "required": [
-        "image",
-        "parallelism",
-        "provider",
-        "schedule"
-      ],
       "type": "object",
       "x-kubernetes-validations": [
         {
