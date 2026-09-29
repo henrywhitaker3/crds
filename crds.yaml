@@ -252,7 +252,7 @@ crds:
 
   - group: karpenter.azure.com
     # renovate: datasource=github-tags depName=Azure/karpenter-provider-azure
-    ref: v1.14.2
+    ref: v1.14.3
     template: https://raw.githubusercontent.com/Azure/karpenter-provider-azure/refs/tags/{{ version }}/charts/karpenter-crd/templates/karpenter.azure.com_{{ name }}.yaml
     names:
       - aksnodeclasses
