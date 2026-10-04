@@ -1060,6 +1060,11 @@
                   ],
                   "type": "string"
                 },
+                "log_prometheus_queries": {
+                  "default": false,
+                  "description": "When true and log_level is trace, Kiali logs PromQL instant and range queries used to obtain metrics.",
+                  "type": "boolean"
+                },
                 "sampler_rate": {
                   "default": "1",
                   "description": "With this setting every sampler_rate-th message will be logged. By default, every message is logged. As an example, setting this to `'2'` means every other message will be logged. The value of this setting is a string but must be parsable as an integer.",
@@ -1120,7 +1125,7 @@
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "Custom labels to be created on the Kiali pod.\nAn example use for this setting is to inject an Istio sidecar such as,\n```\nsidecar.istio.io/inject: \"true\"\n```\n",
+              "description": "Custom labels to be created on the Kiali pod.\nAn example use for this setting is to inject an Istio sidecar such as,\n```\nsidecar.istio.io/inject: \"true\"\n```\nNote that if you set a label key that conflicts with a standard Kiali label,\nyour value will take precedence (user labels win on collision).\n",
               "type": "object"
             },
             "priority_class_name": {
@@ -1210,6 +1215,13 @@
                 "type": "string"
               },
               "description": "Custom annotations to be created on the Kiali Service resource.",
+              "type": "object"
+            },
+            "service_labels": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Custom labels to be created on the Kiali Service resource.\nNote that if you set a label key that conflicts with a standard Kiali label,\nyour value will take precedence (user labels win on collision).\n",
               "type": "object"
             },
             "service_type": {
@@ -2786,8 +2798,8 @@
                       "type": "string"
                     },
                     "show_selector": {
-                      "default": false,
-                      "description": "If true Kiali masthead displays language selector icon.",
+                      "default": true,
+                      "description": "DEPRECATED AFTER v2.27: Language selection is available in Preferences by default. If false, the language selector is hidden until this setting is removed in a future release.",
                       "type": "boolean"
                     }
                   },
