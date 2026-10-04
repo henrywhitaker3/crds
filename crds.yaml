@@ -259,7 +259,7 @@ crds:
 
   - group: kiali.io
     # renovate: datasource=github-tags depName=kiali/kiali-operator
-    ref: v2.32.0
+    ref: v2.33.0
     template: https://raw.githubusercontent.com/kiali/kiali-operator/refs/tags/{{ version }}/crd-docs/crd/kiali.io_{{ name }}.yaml
     names:
       - kialis
