@@ -1,6 +1,6 @@
 module github.com/henrywhitaker3/crds
 
-go 1.26.5
+go 1.27.2
 
 require (
 	github.com/spf13/pflag v1.0.10
