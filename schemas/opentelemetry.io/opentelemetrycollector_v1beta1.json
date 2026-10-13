@@ -2455,6 +2455,20 @@
         "imagePullPolicy": {
           "type": "string"
         },
+        "imagePullSecrets": {
+          "items": {
+            "properties": {
+              "name": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "x-kubernetes-map-type": "atomic"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
         "ingress": {
           "properties": {
             "annotations": {
@@ -4341,6 +4355,11 @@
           },
           "type": "object"
         },
+        "revisionHistoryLimit": {
+          "default": 10,
+          "format": "int32",
+          "type": "integer"
+        },
         "securityContext": {
           "properties": {
             "allowPrivilegeEscalation": {
@@ -6040,6 +6059,11 @@
                 }
               },
               "type": "object"
+            },
+            "revisionHistoryLimit": {
+              "default": 10,
+              "format": "int32",
+              "type": "integer"
             },
             "securityContext": {
               "properties": {
