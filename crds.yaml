@@ -266,7 +266,7 @@ crds:
 
   - group: cilium.io
     # renovate: datasource=github-tags depName=cilium/cilium
-    ref: v1.20.2
+    ref: v1.20.3
     template: https://raw.githubusercontent.com/cilium/cilium/refs/tags/{{ version }}/pkg/k8s/apis/cilium.io/client/crds/v2/{{ name }}.yaml
     names:
       - ciliumbgpadvertisements
@@ -289,7 +289,7 @@ crds:
 
   - group: cilium.io
     # renovate: datasource=github-tags depName=cilium/cilium
-    ref: v1.20.2
+    ref: v1.20.3
     template: https://raw.githubusercontent.com/cilium/cilium/refs/tags/{{ version }}/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/{{ name }}.yaml
     names:
       - ciliumdatapathplugins
