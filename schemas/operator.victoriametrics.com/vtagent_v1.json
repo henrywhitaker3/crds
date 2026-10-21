@@ -314,6 +314,7 @@
                             },
                             "reason": {
                               "description": "reason is a brief CamelCase machine-parseable reason.\nTogether with status it forms the unique identity of a condition entry.\nMaximum permitted length of a reason is 256 bytes.",
+                              "minLength": 1,
                               "type": "string"
                             },
                             "status": {
@@ -323,6 +324,7 @@
                                 "Degraded",
                                 "Inaccessible"
                               ],
+                              "minLength": 1,
                               "type": "string"
                             }
                           },
@@ -332,6 +334,7 @@
                           ],
                           "type": "object"
                         },
+                        "maxItems": 16,
                         "type": "array",
                         "x-kubernetes-list-map-keys": [
                           "status",
@@ -3060,6 +3063,7 @@
                               },
                               "reason": {
                                 "description": "reason is a brief CamelCase machine-parseable reason.\nTogether with status it forms the unique identity of a condition entry.\nMaximum permitted length of a reason is 256 bytes.",
+                                "minLength": 1,
                                 "type": "string"
                               },
                               "status": {
@@ -3069,6 +3073,7 @@
                                   "Degraded",
                                   "Inaccessible"
                                 ],
+                                "minLength": 1,
                                 "type": "string"
                               }
                             },
@@ -3078,6 +3083,7 @@
                             ],
                             "type": "object"
                           },
+                          "maxItems": 16,
                           "type": "array",
                           "x-kubernetes-list-map-keys": [
                             "status",
@@ -3280,7 +3286,7 @@
                         "type": "string"
                       },
                       "controlledResources": {
-                        "description": "Specifies the type of recommendations that will be computed\n(and possibly applied) by VPA.\nIf not specified, the default of [ResourceCPU, ResourceMemory] will be used.",
+                        "description": "Specifies the type of recommendations that will be computed\n(and possibly applied) by VPA.\nIf not specified, the default of [cpu, memory] will be used.",
                         "items": {
                           "description": "ResourceName is the name identifying various resources in a ResourceList.",
                           "type": "string"
