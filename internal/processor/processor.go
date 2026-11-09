@@ -17,7 +17,7 @@ import (
 	"sync"
 
 	"github.com/henrywhitaker3/crds/internal/config"
-	"go.yaml.in/yaml/v3"
+	"go.yaml.in/yaml/v4"
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/sync/singleflight"
 )

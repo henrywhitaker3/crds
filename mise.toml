@@ -1,5 +1,8 @@
+#:schema https://mise.jdx.dev/schema/mise.json
+
 [tools]
 go = "1.27.3"
+gotestsum = "1.13.0"
 
 [tasks.generate]
 description = "Generate CRD schemas"
@@ -8,3 +11,12 @@ run = "go run main.go"
 [tasks.prune]
 description = "Prune orhpaned CRD schemas"
 run = "go run main.go --prune"
+
+[tasks.test]
+description = "Run the unit tests"
+usage = '''
+flag "--packages <packages>"
+'''
+run = '''
+gotestsum --format testname --packages "{{ usage.packages }}"
+'''
