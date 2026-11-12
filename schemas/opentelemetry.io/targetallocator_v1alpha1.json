@@ -3573,7 +3573,6 @@
                     "configMap": {
                       "properties": {
                         "key": {
-                          "default": "ca.crt",
                           "type": "string"
                         },
                         "name": {
